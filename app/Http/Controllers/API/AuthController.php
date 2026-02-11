@@ -4,48 +4,90 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\LoginRequest;
-use App\Http\Requests\API\ProfileRequest;
 use App\Http\Requests\API\RegisterRequest;
-use App\Http\Requests\API\ResendEmail;
+use App\Http\Requests\API\ProfileRequest;
 use App\Services\AuthService;
+use App\Traits\ApiResponse;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
+    use ApiResponse;
+
     protected $authService;
 
+    /**
+     * AuthController constructor.
+     *
+     * @param AuthService $authService
+     */
     public function __construct(AuthService $authService)
     {
         $this->authService = $authService;
     }
 
-    public function register(RegisterRequest $request)
+    /**
+     * Register a new user.
+     *
+     * @param RegisterRequest $request
+     * @return JsonResponse
+     */
+    public function register(RegisterRequest $request): JsonResponse
     {
-        return $this->authService->register($request->validated());
+        $result = $this->authService->register($request->validated());
+        return $this->success($result['data'], $result['message'], 201);
     }
 
-    public function verify(Request $request)
+    /**
+     * Login user.
+     *
+     * @param LoginRequest $request
+     * @return JsonResponse
+     */
+    public function login(LoginRequest $request): JsonResponse
     {
-        return $this->authService->verify($request);
+        $result = $this->authService->login($request->validated());
+
+        if (!$result['success']) {
+            return $this->error($result['message'], 401);
+        }
+
+        return $this->success($result['data'], $result['message']);
     }
 
-    public function resend(ResendEmail $request)
+    /**
+     * Get authenticated user profile.
+     *
+     * @return JsonResponse
+     */
+    public function profile(): JsonResponse
     {
-        return $this->authService->resendEmail($request->validated());
+        $result = $this->authService->profile();
+        return $this->success($result['data'], $result['message']);
     }
 
-    public function login(LoginRequest $request)
+    /**
+     * Update authenticated user profile.
+     *
+     * @param ProfileRequest $request
+     * @return JsonResponse
+     */
+    public function updateProfile(ProfileRequest $request): JsonResponse
     {
-        return $this->authService->login($request->validated());
+        $result = $this->authService->updateProfile($request->validated());
+        return $this->success($result['data'], $result['message']);
     }
 
-    public function logout(Request $request)
+    /**
+     * Logout user.
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function logout(Request $request): JsonResponse
     {
-        return $this->authService->logout($request);
-    }
-
-    public function profile(ProfileRequest $request)
-    {
-        return $this->authService->profile($request->validated());
+        $result = $this->authService->logout($request);
+        return $this->success([], $result['message']);
     }
 }

@@ -25,6 +25,7 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
         'phone', // رقم الهاتف للتواصل/التوصيل
         'password', // كلمة المرور المشفرة
         'image', // مسار صورة الملف الشخصي
+        'role', // دور المستخدم (أدمن أو مستخدم عادي)
     ];
     /**
      * The attributes that should be hidden for serialization.
