@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('brands', function (Blueprint $table) {
+        Schema::create('user_addresses', function (Blueprint $table) {
             $table->id();
-            $table->string('name_ar');
-            $table->string('name_en')->nullable();
-            $table->string('image');
+            $table->text('address');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->string('label')->nullable(); // Label like "Home", "Work"
+            $table->boolean('is_default')->default(false);
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('brands');
+        Schema::dropIfExists('user_addresses');
     }
 };

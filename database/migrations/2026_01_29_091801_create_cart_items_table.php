@@ -12,8 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cart_items', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->id(); // Unique ID for each item in the cart
+            $table->foreignId('cart_id')->constrained()->cascadeOnDelete(); // Link to the parent cart
+            $table->foreignId('product_id')->constrained()->cascadeOnDelete(); // Link to the product being added
+            $table->decimal('quantity', 10, 2); // Amount of product (Decimal supports weights like 0.25kg)
+            $table->timestamps(); // Created at and Updated at timestamps
         });
     }
 

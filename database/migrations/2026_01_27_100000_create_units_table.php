@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('carts', function (Blueprint $table) {
-            $table->id(); // Unique ID for each cart
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete(); // Link to the user who owns the cart
+        Schema::create('units', function (Blueprint $table) {
+            $table->id(); // Unique ID for each unit type
+            $table->string('name_ar'); // Arabic unit name (e.g., كيلو)
+            $table->string('name_en')->nullable(); // English unit name (e.g., kg)
             $table->timestamps(); // Created at and Updated at timestamps
         });
     }
@@ -23,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('carts');
+        Schema::dropIfExists('units');
     }
 };
