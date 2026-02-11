@@ -12,22 +12,22 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->id();
-            $table->string('name_ar');
-            $table->string('name_en');
-            $table->text('description_ar');
-            $table->text('description_en');
-            $table->string('image');
-            $table->json('images');
-            $table->decimal('price', 10, 2);
-            $table->decimal('discount_price', 10, 2);
-            $table->integer('stock');
-            $table->foreignId('category_id')->constrained()->onDelete('cascade');
-            $table->foreignId('brand_id')->constrained()->onDelete('cascade');
-            $table->timestamps();
-            // comment
-            //test
-            //abdo
+            $table->id(); // Unique ID for each product
+            $table->string('name_ar'); // Arabic product name
+            $table->string('name_en')->nullable(); // English product name
+            $table->text('description_ar'); // Detailed Arabic description
+            $table->text('description_en')->nullable(); // Detailed English description
+            $table->decimal('price', 10, 2); // Regular selling price
+            $table->decimal('discount_price', 10, 2)->default(0); // Discounted price if applicable
+            $table->integer('stock'); // Available quantity in stock
+            $table->foreignId('category_id')->constrained()->onDelete('cascade'); // Link to product category
+            $table->foreignId('brand_id')->constrained()->onDelete('cascade'); // Link to product brand
+            $table->foreignId('unit_id')->nullable()->constrained()->nullOnDelete(); // Link to measurement unit (e.g., kg)
+            $table->decimal('min_quantity', 10, 2)->default(1); // Minimum purchase amount
+            $table->decimal('step_quantity', 10, 2)->default(1); // Increment amount (e.g., +0.5 kg)
+            $table->boolean('is_on_sale')->default(false); // Badge for sales
+            $table->boolean('is_featured')->default(false); // Badge for featured/popular items
+            $table->timestamps(); // Created at and Updated at timestamps
         });
     }
 

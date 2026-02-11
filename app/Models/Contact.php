@@ -7,9 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Contact extends Model
 {
     protected $fillable = [
-        "name",
-        "email",
-        "phone",
-        "message",
-    ];
+        'name', // اسم الشخص المرسل للرسالة
+        'phone', // رقم هاتف التواصل
+        'message', // نص الرسالة المرسلة
+    ]; // الحقول القابلة للتعبئة
 }
