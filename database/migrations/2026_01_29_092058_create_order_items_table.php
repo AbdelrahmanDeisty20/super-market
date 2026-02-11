@@ -12,8 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('order_items', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->id(); // Unique ID for each item in the order
+            $table->foreignId('order_id')->constrained()->cascadeOnDelete(); // Link to the parent order
+            $table->foreignId('product_id')->constrained()->cascadeOnDelete(); // Link to the product purchased
+            $table->decimal('quantity', 10, 2); // Amount purchased (Supports kg/weighted items)
+            $table->decimal('price', 10, 2); // Price snapshot at time of purchase (prevents historical changes)
+            $table->timestamps(); // Created at and Updated at timestamps
         });
     }
 

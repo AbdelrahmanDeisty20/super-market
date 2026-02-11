@@ -4,40 +4,82 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Traits\HasTranslations;
+
 class Product extends Model
 {
+    use HasTranslations;
+
     protected $fillable = [
-        "name_ar",
-        "name_en",
-        "description_ar",
-        "description_en",
-        "price",
-        "stock",
-        "brand_id",
-        "category_id",
-        "image",
-    ];
+        'name_ar', // اسم المنتج بالعربية
+        'name_en', // اسم المنتج بالانجليزية
+        'description_ar', // وصف المنتج بالعربية
+        'description_en', // وصف المنتج بالانجليزية
+        'price', // السعر الأساسي
+        'discount_price', // سعر الخصم (إن وجد)
+        'stock', // الكمية المتوفرة في المخزن
+        'category_id', // معرف القسم التابع له
+        'brand_id', // معرف الماركة التابعة لها
+        'unit_id', // معرف وحدة القياس (كيلو، قطعة، إلخ)
+        'min_quantity', // أقل كمية يمكن شراؤها
+        'step_quantity', // مقدار الزيادة عند طلب كمية إضافية
+        'is_on_sale', // هل المنتج عليه عرض حالياً؟
+        'is_featured', // هل المنتج مميز (يظهر في المقدمة)؟
+    ]; // الحقول القابلة للتعبئة
+
+    /**
+     * الحصول على الاسم المترجم للمنتج
+     */
     public function getNameAttribute()
     {
-        $lang = app()->getLocale();
-        return $this->{"name_{$lang}"};
+        return $this->getTranslatedValue('name');
     }
+
+    /**
+     * الحصول على الوصف المترجم للمنتج
+     */
     public function getDescriptionAttribute()
     {
-        $lang = app()->getLocale();
-        return $this->{"description_{$lang}"};
+        return $this->getTranslatedValue('description');
     }
-    public function getImagePathAttribute()
-    {
-        return asset('storage/app/public/products/'.$this->image);
-    }
-    public function brand()
-    {
-        return $this->belongsTo(Brand::class);
-    }
+
+    /**
+     * الحصول على القسم التابع له المنتج
+     */
     public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class); // المنتج ينتمي لقسم واحد
     }
-    
+
+    /**
+     * الحصول على الماركة التابعة لها المنتج
+     */
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class); // المنتج ينتمي لماركة واحدة
+    }
+
+    /**
+     * الحصول على وحدة القياس الخاصة بالمنتج
+     */
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class); // المنتج له وحدة قياس واحدة
+    }
+
+    /**
+     * الحصول على جميع صور المنتج الإضافية
+     */
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class); // المنتج يمكن أن يحتوي على صور متعددة
+    }
+
+    /**
+     * الحصول على جميع تقييمات المنتج
+     */
+    public function reviews()
+    {
+        return $this->hasMany(Review::class); // المنتج يمكن أن يحصل على تقييمات متعددة
+    }
 }

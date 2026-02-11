@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('refesh_tokens', function (Blueprint $table) {
+        Schema::create('faqs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->string('token')->unique();
-            $table->dateTime('expires_at');
+            $table->string('question_ar');
+            $table->string('question_en')->nullable();
+            $table->text('answer_ar');
+            $table->text('answer_en')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('refesh_tokens');
+        Schema::dropIfExists('faqs');
     }
 };

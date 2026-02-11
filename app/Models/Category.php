@@ -4,26 +4,32 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Traits\HasTranslations;
+
 class Category extends Model
 {
+    use HasTranslations;
+
     protected $fillable = [
-        'name_ar',
-        'name_en',
-        'image',
-    ];
+        'name_ar', // اسم القسم باللغة العربية
+        'name_en', // اسم القسم باللغة الانجليزية
+        'image', // مسار صورة القسم
+        'is_visible', // هل القسم مرئي في الموقع؟
+    ]; // الحقول القابلة للتعبئة
 
-    protected $appends = ['name', 'image_path'];
-
-    protected $hidden = ['name_ar', 'name_en', 'image'];
-
+    /**
+     * الحصول على الاسم المترجم للقسم
+     */
     public function getNameAttribute()
     {
-        $lang = app()->getLocale();
-        return $this->{"name_{$lang}"};
+        return $this->getTranslatedValue('name');
     }
 
-    public function getImagePathAttribute()
+    /**
+     * الحصول على جميع منتجات هذا القسم
+     */
+    public function products()
     {
-        return asset('storage/categories/' . $this->image);
+        return $this->hasMany(Product::class); // القسم يحتوي على منتجات متعددة
     }
 }
