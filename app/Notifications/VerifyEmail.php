@@ -22,11 +22,11 @@ class VerifyEmail extends VerifyEmailBase implements ShouldQueue
         $verificationUrl = $this->verificationUrl($notifiable);
 
         return (new MailMessage)
-            ->subject('تأكيد البريد الإلكتروني')
-            ->greeting('مرحباً!')
-            ->line('يرجى الضغط على الزر أدناه لتأكيد بريدك الإلكتروني.')
-            ->action('تأكيد البريد الإلكتروني', $verificationUrl)
-            ->line('إذا لم تقم بإنشاء حساب، فلا داعي لاتخاذ أي إجراء آخر.')
-            ->salutation('مع تحياتي، ' . config('app.name'));
+            ->subject(__('api.verification.subject'))
+            ->greeting(__('api.verification.greeting'))
+            ->line(__('api.verification.instruction'))
+            ->action(__('api.verification.action'), $verificationUrl)
+            ->line(__('api.verification.footer'))
+            ->salutation(__('api.verification.salutation'));
     }
 }

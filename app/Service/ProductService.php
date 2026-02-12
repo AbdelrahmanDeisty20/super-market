@@ -1,5 +1,6 @@
 <?php
-namespace App\Services;
+
+namespace App\Service;
 
 use App\Models\Product;
 
@@ -7,7 +8,7 @@ class ProductService
 {
     public function index()
     {
-        $products = Product::select('id','name_ar','name_en','image','price','description_ar','description_en','stock')->get();
+        $products = Product::select('id', 'name_ar', 'name_en', 'image', 'price', 'description_ar', 'description_en', 'stock')->get();
         if ($products->isEmpty()) {
             return response()->json([
                 'status' => true,

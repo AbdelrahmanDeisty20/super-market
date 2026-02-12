@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Service;
 
 use App\Models\Category;
 use App\Http\Resources\API\CategoryResource;
@@ -19,14 +19,14 @@ class CategoryService
         if ($categories->isEmpty()) {
             return [
                 'success' => false,
-                'message' => __('No categories found'),
+                'message' => __('messages.No categories found'),
                 'data' => []
             ];
         }
 
         return [
             'success' => true,
-            'message' => __('Categories fetched successfully'),
+            'message' => __('messages.Categories fetched successfully'),
             'data' => CategoryResource::collection($categories)
         ];
     }

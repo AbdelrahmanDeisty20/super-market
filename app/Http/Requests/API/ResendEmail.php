@@ -29,9 +29,16 @@ class ResendEmail extends FormRequest
     public function messages(): array
     {
         return [
-            'email.required' => __('The email field is required.'),
-            'email.email' => __('The email must be a valid email address.'),
-            'email.exists' => __('The selected email is invalid.'),
+            'email.required' => __('messages.The email field is required.'),
+            'email.email' => __('messages.The email must be a valid email address.'),
+            'email.exists' => __('messages.The selected email is invalid.'),
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'email' => __('messages.email'),
         ];
     }
 }
