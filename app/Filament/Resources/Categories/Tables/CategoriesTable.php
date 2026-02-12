@@ -20,12 +20,8 @@ class CategoriesTable
                     ->label(__('Admin.fields.image'))
                     ->disk('public')
                     ->size(60),
-                TextColumn::make('name_ar')
-                    ->label(__('Admin.fields.name_ar'))
-                    ->searchable()
-                    ->sortable(),
-                TextColumn::make('name_en')
-                    ->label(__('Admin.fields.name_en'))
+                TextColumn::make('name')
+                    ->label(__('Admin.fields.name'))
                     ->searchable()
                     ->sortable(),
             ])
