@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App;
+use Illuminate\Support\Facades\App;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,9 +17,11 @@ class setLang
     public function handle(Request $request, Closure $next): Response
     {
         $currentLocale = session('lang');
-        $locale = $currentLocale
-            ?? $request->query('lang')
+
+        // Prioritize query for manual control, then header for automatic detection
+        $locale = $request->query('lang')
             ?? $request->header('Accept-Language')
+            ?? $currentLocale
             ?? config('app.locale');
 
         // Clean and confirm language
@@ -28,10 +30,18 @@ class setLang
 
         if (in_array($locale, $supportedLocales)) {
             App::setLocale($locale);
-            if ($currentLocale !== $locale) {
+            config(['app.locale' => $locale]); // Force update config as well
+
+            if ($currentLocale !== $locale && !$request->expectsJson()) {
                 session(['lang' => $locale]);
             }
         }
+
+        \Illuminate\Support\Facades\Log::info('Language middleware set locale', [
+            'locale' => App::getLocale(),
+            'requested_locale' => $locale,
+            'is_api' => $request->expectsJson()
+        ]);
 
         return $next($request);
     }

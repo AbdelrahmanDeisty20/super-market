@@ -70,15 +70,4 @@ class AuthController extends Controller
         return $this->success([], __('messages.Account deleted successfully'));
     }
 
-    public function refresh(Request $request)
-    {
-        $result = $this->authService->refreshToken($request->user());
-
-        $data = [
-            'user' => new UserResource($result['user']),
-            'token' => $result['token']
-        ];
-
-        return $this->success($data, __('messages.Token refreshed successfully')); // check if message exists
-    }
 }

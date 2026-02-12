@@ -22,7 +22,7 @@ class AuthService
             'role' => $data['role'] ?? 'user',
         ]);
 
-        $user->sendEmailVerificationNotification();
+        event(new Registered($user));
 
         // Note: Real_estate doesn't generate token on register if verification is required.
         // We will return the user object, and let the controller decide response format.
@@ -108,11 +108,6 @@ class AuthService
         return $user->delete();
     }
 
-    public function refreshToken(User $user)
-    {
-        $user->currentAccessToken()->delete();
-        return $this->generateTokenResponse($user);
-    }
 
     protected function generateTokenResponse(User $user)
     {
