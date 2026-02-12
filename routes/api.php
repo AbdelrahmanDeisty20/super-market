@@ -17,6 +17,11 @@ Route::middleware([setLang::class])->group(function () {
     Route::get('email/verify/{id}/{hash}', [VerificationController::class, 'verify'])
         ->name('api.verification.verify');
 
+    // Password Reset
+    Route::post('forgot-password', [App\Http\Controllers\API\Auth\ForgotPasswordController::class, 'sendResetLinkEmail']);
+    Route::get('password/verify/{token}', [App\Http\Controllers\API\Auth\PasswordLinkConfirmationController::class, 'verify'])->name('api.password.verify');
+    Route::post('reset-password', [App\Http\Controllers\API\Auth\ResetPasswordController::class, 'reset']);
+
     Route::get('brands', [BrandController::class, 'index']);
     Route::get('categories', [CategoryController::class, 'index']);
 
@@ -25,7 +30,6 @@ Route::middleware([setLang::class])->group(function () {
         Route::get('profile', [AuthController::class, 'profile']);
         Route::put('profile', [AuthController::class, 'update']);
         Route::post('logout', [AuthController::class, 'logout']);
-        Route::post('refresh-token', [AuthController::class, 'refresh']);
         Route::delete('profile', [AuthController::class, 'destroy']);
     });
 });

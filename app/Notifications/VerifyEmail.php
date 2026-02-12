@@ -7,9 +7,8 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class VerifyEmail extends VerifyEmailBase implements ShouldQueue
+class VerifyEmail extends VerifyEmailBase
 {
-    use Queueable;
 
     /**
      * Get the mail representation of the notification.
@@ -19,14 +18,21 @@ class VerifyEmail extends VerifyEmailBase implements ShouldQueue
      */
     public function toMail($notifiable)
     {
+        \Illuminate\Support\Facades\Log::info('Sending verification email', [
+            'user_id' => $notifiable->id,
+            'locale' => app()->getLocale(),
+            'subject_translation' => __('api.verification.subject'),
+            'messages_test' => __('messages.Account registered successfully, please verify your email address'),
+        ]);
+
         $verificationUrl = $this->verificationUrl($notifiable);
 
         return (new MailMessage)
-            ->subject(__('api.verification.subject'))
-            ->greeting(__('api.verification.greeting'))
-            ->line(__('api.verification.instruction'))
-            ->action(__('api.verification.action'), $verificationUrl)
-            ->line(__('api.verification.footer'))
-            ->salutation(__('api.verification.salutation'));
+            ->subject(__('messages.verification.subject'))
+            ->greeting(__('messages.verification.greeting'))
+            ->line(__('messages.verification.instruction'))
+            ->action(__('messages.verification.action'), $verificationUrl)
+            ->line(__('messages.verification.footer'))
+            ->salutation(__('messages.verification.salutation'));
     }
 }

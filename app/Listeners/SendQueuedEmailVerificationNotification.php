@@ -8,9 +8,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class SendQueuedEmailVerificationNotification implements ShouldQueue
+class SendQueuedEmailVerificationNotification
 {
-    use InteractsWithQueue;
 
     /**
      * Handle the event.

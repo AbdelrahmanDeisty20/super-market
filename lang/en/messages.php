@@ -1,6 +1,14 @@
 <?php
 
 return [
+    'verification' => [
+        'subject' => 'Verify Email Address',
+        'greeting' => 'Hello!',
+        'instruction' => 'Please click the button below to verify your email address.',
+        'action' => 'Verify Email Address',
+        'footer' => 'If you did not create an account, no further action is required.',
+        'salutation' => 'Regards, ' . config('app.name'),
+    ],
     "The :attribute field is required" => "The :attribute field is required",
     "The :attribute must be a valid email address" => "The :attribute must be a valid email address",
     "The :attribute has already been taken" => "The :attribute has already been taken",
@@ -49,5 +57,14 @@ return [
     "password" => "password",
     "name" => "name",
     "phone" => "phone",
-    "image" => "image"
+    "image" => "image",
+    "Password reset link sent" => "Password reset link sent",
+    "Password reset link not clicked" => "Password reset link not clicked",
+    "Password has been reset" => "Password has been reset",
+    "throttled" => "Too many requests. Please try again later.",
+    "passwords.user" => "We can't find a user with that email address.",
+    "passwords.token" => "This password reset token is invalid.",
+    "passwords.throttled" => "Please wait before retrying.",
+    "passwords.sent" => "We have emailed your password reset link.",
+    "passwords.reset" => "Your password has been reset.",
 ];

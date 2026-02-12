@@ -21,20 +21,21 @@ class VerificationController extends Controller
         }
 
         if ($user->hasVerifiedEmail()) {
-            return view('auth.verified', [
-                'title' => __('messages.Email Already Verified'),
-                'message' => __('messages.Your email is already verified. You can continue using the app.')
-            ]);
+            if ($request->wantsJson()) {
+                return $this->success(new UserResource($user), __('messages.Email already verified'));
+            }
+            return redirect(config('app.frontend_url') . '/signin?already_verified=1');
         }
 
         if ($user->markEmailAsVerified()) {
             event(new \Illuminate\Auth\Events\Verified($user));
         }
 
-        return view('auth.verified', [
-            'title' => __('messages.Email Verified!'),
-            'message' => __('messages.Your email has been successfully verified.')
-        ]);
+        if ($request->wantsJson()) {
+            return $this->success(new UserResource($user), __('messages.Your email has been successfully verified'));
+        }
+
+        return redirect(env('APP_URL') . '/signin?verified=1');
     }
 
     public function resend(Request $request)
@@ -51,6 +52,6 @@ class VerificationController extends Controller
 
         $user->sendEmailVerificationNotification();
 
-        return $this->success([], __('messages.Verification link sent'));
+        return $this->success(new UserResource($user), __('messages.Verification link sent'));
     }
 }

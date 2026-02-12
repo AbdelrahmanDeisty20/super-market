@@ -99,4 +99,14 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
     {
         return $this->hasMany(Whishlist::class); // علاقة واحد لمتعدد مع المفضلات
     }
+
+    /**
+     * Send the email verification notification.
+     *
+     * @return void
+     */
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new \App\Notifications\VerifyEmail);
+    }
 }

@@ -1,6 +1,14 @@
 <?php
 
 return [
+    'verification' => [
+        'subject' => 'تأكيد البريد الإلكتروني',
+        'greeting' => 'مرحباً!',
+        'instruction' => 'يرجى الضغط على الزر أدناه لتأكيد عنوان بريدك الإلكتروني.',
+        'action' => 'تأكيد البريد الإلكتروني',
+        'footer' => 'إذا لم تقم بإنشاء حساب، فلا داعي لاتخاذ أي إجراء آخر.',
+        'salutation' => 'مع أطيب التحيات، ' . config('app.name'),
+    ],
     "The :attribute field is required" => "حقل :attribute مطلوب",
     "The :attribute must be a valid email address" => "يجب أن يكون :attribute عنوان بريد إلكتروني صحيح",
     "The :attribute has already been taken" => "قيمة :attribute مستخدمة من قبل",
@@ -49,5 +57,14 @@ return [
     "password" => "كلمة المرور",
     "name" => "الاسم",
     "phone" => "رقم الهاتف",
-    "image" => "الصورة"
+    "image" => "الصورة",
+    "Password reset link sent" => "تم إرسال رابط إعادة تعيين كلمة المرور",
+    "Password reset link not clicked" => "لم يتم الضغط على رابط إعادة تعيين كلمة المرور",
+    "Password has been reset" => "تم إعادة تعيين كلمة المرور بنجاح",
+    "throttled" => "طلبات كثيرة جداً. يرجى المحاولة مرة أخرى لاحقاً.",
+    "passwords.user" => "لم نتمكن من العثور على مستخدم بهذا البريد الإلكتروني.",
+    "passwords.token" => "رمز إعادة تعيين كلمة المرور غير صالح.",
+    "passwords.throttled" => "يرجى الانتظار قبل المحاولة مرة أخرى.",
+    "passwords.sent" => "تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني.",
+    "passwords.reset" => "تم إعادة تعيين كلمة المرور بنجاح.",
 ];
