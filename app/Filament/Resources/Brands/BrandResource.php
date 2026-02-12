@@ -20,7 +20,22 @@ class BrandResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-tag';
 
-    protected static ?string $recordTitleAttribute = 'brands';
+    protected static ?string $recordTitleAttribute = 'name';
+
+    public static function getNavigationLabel(): string
+    {
+        return __('Admin.sidebar.brands');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('Admin.resources.brand.singular');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Admin.resources.brand.plural');
+    }
 
     public static function form(Schema $schema): Schema
     {

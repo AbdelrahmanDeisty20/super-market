@@ -15,10 +15,13 @@ class BrandsTable
     {
         return $table
             ->columns([
-                ImageColumn::make('image_path')
+                ImageColumn::make('image')
+                    ->label(__('Admin.fields.image'))
+                    ->disk('public')
                     ->circular()
                     ->size(60),
                 TextColumn::make('name')
+                    ->label(__('Admin.fields.name'))
                     ->searchable()
                     ->sortable(),
             ])
