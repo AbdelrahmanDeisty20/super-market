@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Notifications\ApiVerifyEmail;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -19,6 +20,8 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
      *
      * @var list<string>
      */
+
+
     protected $fillable = [
         'name', // اسم المستخدم الكامل
         'email', // البريد الإلكتروني (فريد)
@@ -51,15 +54,6 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = bcrypt($value);
-    }
-    public function setPhoneAttribute($value)
-    {
-        if (str_starts_with($value, '00')) {
-            $value = '+' . substr($value, 2);
-        } elseif (!str_starts_with($value, '+')) {
-            $value = '+' . $value;
-        }
-        $this->attributes['phone'] = $value;
     }
     public function canAccessPanel(Panel $panel): bool
     {

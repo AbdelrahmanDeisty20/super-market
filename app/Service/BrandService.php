@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Service;
 
 use App\Http\Resources\API\BrandResource;
 use App\Models\Brand;
@@ -19,14 +19,14 @@ class BrandService
         if ($brands->isEmpty()) {
             return [
                 'success' => false,
-                'message' => __('No brands found'),
+                'message' => __('messages.No brands found'),
                 'data' => []
             ];
         }
 
         return [
             'success' => true,
-            'message' => __('Brands fetched successfully'),
+            'message' => __('messages.Brands fetched successfully'),
             'data' => BrandResource::collection($brands)
         ];
     }

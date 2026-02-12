@@ -22,20 +22,25 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "email"=>['required','email','exists:users,email'],
-            "password"=>['required','string','min:6','max:255']
+            "email" => ['required', 'email', 'exists:users,email'],
+            'password' => 'required',
         ];
     }
 
     public function messages()
     {
         return [
-            '*required' => __('this field is required'),
-            'email.email' => __('Email must be a valid email address'),
-            'email.exists' => __('Email does not exist'),
-            '*string' => __('Password must be a string'),
-            '*min' => __('Password must be at least :min characters', ['min' => 6]),
-            '*max' => __('Password must be at most :max characters', ['max' => 255]),
+            'required' => __('messages.The :attribute field is required'),
+            'email.email' => __('messages.Email must be a valid email address'),
+            'email.exists' => __('messages.Email does not exist'),
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'email' => __('messages.email'),
+            'password' => __('messages.password'),
         ];
     }
 }

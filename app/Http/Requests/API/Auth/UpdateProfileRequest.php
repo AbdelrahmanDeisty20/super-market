@@ -1,50 +1,35 @@
 <?php
 
-namespace App\Http\Requests\API;
+namespace App\Http\Requests\API\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RegisterRequest extends FormRequest
+class UpdateProfileRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
-            'email' => [
-                'required',
-                'email',
-                'unique:users,email'
+            'name' => 'nullable|string|max:255',
+            'phone' => [
+                'nullable',
+                'string',
+                'regex:/^01[0125][0-9]{8}$/',
             ],
             'password' => [
-                'required',
+                'nullable',
                 'string',
                 'confirmed',
                 \Illuminate\Validation\Rules\Password::min(8)
                     ->letters()
                     ->numbers(),
             ],
-            'name' => [
-                'required',
-                'string',
-                'max:255'
-            ],
-            'phone' => [
-                'required',
-                'string',
-                'regex:/^01[0125][0-9]{8}$/',
-            ],
+            'current_password' => 'required_with:password|string',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ];
     }
 
@@ -52,9 +37,6 @@ class RegisterRequest extends FormRequest
     {
         return [
             'required' => __('messages.The :attribute field is required'),
-            'email' => __('messages.The :attribute must be a valid email address'),
-            'unique' => __('messages.The :attribute has already been taken'),
-            'confirmed' => __('messages.The :attribute confirmation does not match'),
             'string' => __('messages.The :attribute must be a string'),
             'max' => __('messages.The :attribute may not be greater than :max characters'),
             'min' => __('messages.The :attribute must be at least :min characters'),
@@ -63,16 +45,18 @@ class RegisterRequest extends FormRequest
             'password.min' => __('messages.The :attribute must be at least 8 characters'),
             'password.letters' => __('messages.The :attribute must contain at least one letter'),
             'password.numbers' => __('messages.The :attribute must contain at least one number'),
+            'confirmed' => __('messages.The :attribute confirmation does not match'),
+            'required_with' => __('messages.The :attribute field is required when :values is present'),
         ];
     }
 
     public function attributes(): array
     {
         return [
-            'email' => __('messages.email'),
             'password' => __('messages.password'),
             'name' => __('messages.name'),
             'phone' => __('messages.phone'),
+            'current_password' => __('messages.current_password'),
         ];
     }
 }

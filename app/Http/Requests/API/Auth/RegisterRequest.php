@@ -1,32 +1,21 @@
 <?php
 
-namespace App\Http\Requests\API;
+namespace App\Http\Requests\API\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 
 class RegisterRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
-            'email' => [
-                'required',
-                'email',
-                'unique:users,email'
-            ],
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
             'password' => [
                 'required',
                 'string',
@@ -35,16 +24,13 @@ class RegisterRequest extends FormRequest
                     ->letters()
                     ->numbers(),
             ],
-            'name' => [
-                'required',
-                'string',
-                'max:255'
-            ],
+            'role' => 'nullable|in:user,admin', // Supermarket might use user/admin instead of buyer/seller
             'phone' => [
                 'required',
                 'string',
                 'regex:/^01[0125][0-9]{8}$/',
             ],
+            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ];
     }
 
