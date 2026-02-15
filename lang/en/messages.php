@@ -67,4 +67,8 @@ return [
     "passwords.throttled" => "Please wait before retrying.",
     "passwords.sent" => "We have emailed your password reset link.",
     "passwords.reset" => "Your password has been reset.",
+    "Brand fetched successfully" => "Brand fetched successfully",
+    "Brand not found" => "Brand not found",
+    "messages.Category not found" => "Category not found",
+    "Category fetched successfully" => "Category fetched successfully",
 ];

@@ -18,16 +18,34 @@ class CategoryService
 
         if ($categories->isEmpty()) {
             return [
-                'success' => false,
+                'status' => false,
                 'message' => __('messages.No categories found'),
                 'data' => []
             ];
         }
 
         return [
-            'success' => true,
+            'status' => true,
             'message' => __('messages.Categories fetched successfully'),
             'data' => CategoryResource::collection($categories)
+        ];
+    }
+
+    public function getCategoryById($id)
+    {
+        $category = Category::find($id);
+        if (!$category) {
+            return [
+                'status' => false,
+                'message' => __('messages.Category not found'),
+                'data' => []
+            ];
+        }
+
+        return [
+            'status' => true,
+            'message' => __('messages.Category fetched successfully'),
+            'data' => new CategoryResource($category)
         ];
     }
 }

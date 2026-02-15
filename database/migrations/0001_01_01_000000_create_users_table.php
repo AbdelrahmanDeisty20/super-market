@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable(); // Timestamp for email verification
             $table->string('password'); // Hashed password
             $table->enum('role', ['admin', 'user'])->default('user');
-            $table->string("phone"); // Phone number for contact/delivery
+            $table->string("phone")->nullable(); // Phone number for contact/delivery
             $table->string('image')->nullable(); // Profile photo path
             $table->rememberToken(); // Session persistence token
             $table->timestamps(); // Created at and Updated at timestamps

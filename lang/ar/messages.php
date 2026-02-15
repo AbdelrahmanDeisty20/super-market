@@ -67,4 +67,8 @@ return [
     "passwords.throttled" => "يرجى الانتظار قبل المحاولة مرة أخرى.",
     "passwords.sent" => "تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني.",
     "passwords.reset" => "تم إعادة تعيين كلمة المرور بنجاح.",
+    "Brand fetched successfully" => "تم جلب البراند بنجاح",
+    "Brand not found" => "البراند غير موجود",
+    "Category not found" => "القسم غير موجود",
+    "Category fetched successfully" => "تم جلب القيم بنجاح",
 ];

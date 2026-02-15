@@ -32,10 +32,19 @@ class CategoryController extends Controller
     {
         $result = $this->categoryService->getCategories();
 
-        if (!$result['success']) {
+        if (!$result['status']) {
             return $this->error($result['message']);
         }
 
         return $this->success($result['data'], $result['message']);
+    }
+
+    public function show($id)
+    {
+        $result = $this->categoryService->getCategoryById($id);
+        if (!$result['status']) {
+            return $this->error($result['message']);
+        }
+        return $this->success($result['data'],$result['message']);
     }
 }
