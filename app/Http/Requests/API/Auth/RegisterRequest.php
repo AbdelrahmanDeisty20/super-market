@@ -24,7 +24,6 @@ class RegisterRequest extends FormRequest
                     ->letters()
                     ->numbers(),
             ],
-            'role' => 'nullable|in:user,admin', // Supermarket might use user/admin instead of buyer/seller
             'phone' => [
                 'required',
                 'string',

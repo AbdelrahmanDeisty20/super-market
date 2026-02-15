@@ -18,16 +18,37 @@ class BrandService
 
         if ($brands->isEmpty()) {
             return [
-                'success' => false,
+                'status' => false,
                 'message' => __('messages.No brands found'),
                 'data' => []
             ];
         }
 
         return [
-            'success' => true,
+            'status' => true,
             'message' => __('messages.Brands fetched successfully'),
             'data' => BrandResource::collection($brands)
         ];
     }
+
+    public function getBrandById($id)
+    {
+        $brand= Brand::find($id);
+
+        if (!$brand) {
+            return [
+                'status' => false,
+                'message' => __('messages.Brand not found'),
+                'data' => []
+            ];
+        }
+
+        return [
+            'status' => true,
+            'message' => __('messages.Brand fetched successfully'),
+            'data' => new BrandResource($brand)
+        ];
+    }
+
+
 }

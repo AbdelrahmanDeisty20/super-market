@@ -23,7 +23,10 @@ Route::middleware([setLang::class])->group(function () {
     Route::post('reset-password', [App\Http\Controllers\API\Auth\ResetPasswordController::class, 'reset']);
 
     Route::get('brands', [BrandController::class, 'index']);
+    Route::get('brand/{id}',[BrandController::class,'show']);
+
     Route::get('categories', [CategoryController::class, 'index']);
+    Route::get('category/{id}',[CategoryController::class,'show']);
 
     // Protected routes
     Route::middleware(['auth:sanctum', 'verified'])->group(function () {

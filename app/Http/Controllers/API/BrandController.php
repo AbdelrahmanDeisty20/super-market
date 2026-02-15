@@ -26,10 +26,22 @@ class BrandController extends Controller
     {
         $result = $this->brandService->getBrands();
 
-        if (!$result['success']) {
+        if (!$result['status']) {
             return $this->error($result['message']);
         }
 
         return $this->success($result['data'], $result['message']);
+    }
+
+    public function show($id)
+    {
+        $result = $this->brandService->getBrandById($id);
+
+        if (!$result['status']) {
+            return $this->error($result['message']);
+        }
+
+        return $this->success($result['data'],$result['message']);
+
     }
 }
