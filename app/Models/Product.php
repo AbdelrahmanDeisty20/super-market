@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Traits\HasTranslations;
 
 class Product extends Model
 {
-    use HasTranslations;
+    use HasFactory, HasTranslations;
 
     protected $fillable = [
         'name_ar', // اسم المنتج بالعربية
@@ -23,9 +24,16 @@ class Product extends Model
         'unit_id', // معرف وحدة القياس (كيلو، قطعة، إلخ)
         'min_quantity', // أقل كمية يمكن شراؤها
         'step_quantity', // مقدار الزيادة عند طلب كمية إضافية
-        'is_on_sale', // هل المنتج عليه عرض حالياً؟
         'is_featured', // هل المنتج مميز (يظهر في المقدمة)؟
     ]; // الحقول القابلة للتعبئة
+
+    /**
+     * الحصول على العروض المرتبطة بالمنتج
+     */
+    public function offers()
+    {
+        return $this->belongsToMany(Offer::class)->where('is_active', true);
+    }
 
     /**
      * الحصول على الاسم المترجم للمنتج

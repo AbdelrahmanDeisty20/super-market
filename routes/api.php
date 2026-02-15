@@ -4,6 +4,7 @@ use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\API\Auth\VerificationController;
 use App\Http\Controllers\API\BrandController;
 use App\Http\Controllers\API\CategoryController;
+use App\Http\Controllers\API\ProductController;
 use App\Http\Middleware\setLang;
 use Illuminate\Support\Facades\Route;
 
@@ -23,10 +24,17 @@ Route::middleware([setLang::class])->group(function () {
     Route::post('reset-password', [App\Http\Controllers\API\Auth\ResetPasswordController::class, 'reset']);
 
     Route::get('brands', [BrandController::class, 'index']);
-    Route::get('brand/{id}',[BrandController::class,'show']);
+    Route::get('brand/{id}', [BrandController::class, 'show']);
 
     Route::get('categories', [CategoryController::class, 'index']);
-    Route::get('category/{id}',[CategoryController::class,'show']);
+    Route::get('category/{id}', [CategoryController::class, 'show']);
+
+    Route::get('products', [ProductController::class, 'index']);
+    Route::get('product/may-like', [ProductController::class, 'mayLike']);
+    Route::get('product/{id}', [ProductController::class, 'show']);
+    Route::get('product/{id}/related', [ProductController::class, 'related']);
+    Route::get('isFeatured', [ProductController::class, 'isFeatured']);
+    Route::get('onSale', [ProductController::class, 'onSale']);
 
     // Protected routes
     Route::middleware(['auth:sanctum', 'verified'])->group(function () {

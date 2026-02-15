@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Traits\HasTranslations;
 
 class Unit extends Model
 {
-    use HasTranslations;
+    use HasFactory, HasTranslations;
 
     protected $fillable = [
         'name_ar', // اسم وحدة القياس بالعربية (مثال: كيلو)

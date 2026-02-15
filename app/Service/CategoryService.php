@@ -14,7 +14,7 @@ class CategoryService
      */
     public function getCategories()
     {
-        $categories = Category::where('is_visible', true)->get();
+        $categories = Category::where('is_visible', true)->paginate(10);
 
         if ($categories->isEmpty()) {
             return [
@@ -27,7 +27,7 @@ class CategoryService
         return [
             'status' => true,
             'message' => __('messages.Categories fetched successfully'),
-            'data' => CategoryResource::collection($categories)
+            'data' => $categories
         ];
     }
 

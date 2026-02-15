@@ -14,7 +14,7 @@ class BrandService
      */
     public function getBrands()
     {
-        $brands = Brand::all();
+        $brands = Brand::paginate(10);
 
         if ($brands->isEmpty()) {
             return [
@@ -27,13 +27,13 @@ class BrandService
         return [
             'status' => true,
             'message' => __('messages.Brands fetched successfully'),
-            'data' => BrandResource::collection($brands)
+            'data' => $brands
         ];
     }
 
     public function getBrandById($id)
     {
-        $brand= Brand::find($id);
+        $brand = Brand::find($id);
 
         if (!$brand) {
             return [
@@ -49,6 +49,4 @@ class BrandService
             'data' => new BrandResource($brand)
         ];
     }
-
-
 }

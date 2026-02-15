@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Resources\API\CategoryResource;
 use App\Http\Controllers\Controller;
 use App\Service\CategoryService;
 use App\Traits\ApiResponse;
@@ -36,7 +37,7 @@ class CategoryController extends Controller
             return $this->error($result['message']);
         }
 
-        return $this->success($result['data'], $result['message']);
+        return $this->paginated(CategoryResource::class, $result['data']);
     }
 
     public function show($id)
@@ -45,6 +46,6 @@ class CategoryController extends Controller
         if (!$result['status']) {
             return $this->error($result['message']);
         }
-        return $this->success($result['data'],$result['message']);
+        return $this->success($result['data'], $result['message']);
     }
 }
