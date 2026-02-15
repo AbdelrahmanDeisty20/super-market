@@ -4,8 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 class Coupon extends Model
 {
+    use HasFactory;
     protected $fillable = [
         'code', // كود الخصم (مثل: SAVE10)
         'type', // نوع الخصم (مبلغ ثابت أو نسبة مئوية)

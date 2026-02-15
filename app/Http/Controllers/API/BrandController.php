@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Resources\API\BrandResource;
 use App\Http\Controllers\Controller;
 use App\Service\BrandService;
 use Illuminate\Http\Request;
@@ -30,7 +31,7 @@ class BrandController extends Controller
             return $this->error($result['message']);
         }
 
-        return $this->success($result['data'], $result['message']);
+        return $this->paginated(BrandResource::class, $result['data']);
     }
 
     public function show($id)
@@ -41,7 +42,6 @@ class BrandController extends Controller
             return $this->error($result['message']);
         }
 
-        return $this->success($result['data'],$result['message']);
-
+        return $this->success($result['data'], $result['message']);
     }
 }

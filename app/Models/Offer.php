@@ -4,8 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\HasTranslations;
+
 class Offer extends Model
 {
+    use HasFactory, HasTranslations;
     protected $fillable = [
         'title_ar', // عنوان العرض بالعربية
         'title_en', // عنوان العرض بالإنجليزية
@@ -18,4 +22,28 @@ class Offer extends Model
         'end_date', // تاريخ نهاية العرض
         'is_active', // هل العرض مفعل حالياً؟
     ]; // الحقول القابلة للتعبئة
+
+    /**
+     * الحصول على عنوان العرض المترجم
+     */
+    public function getTitleAttribute()
+    {
+        return $this->getTranslatedValue('title');
+    }
+
+    /**
+     * الحصول على وصف العرض المترجم
+     */
+    public function getDescriptionAttribute()
+    {
+        return $this->getTranslatedValue('description');
+    }
+
+    /**
+     * الحصول على المنتجات المشمولة في هذا العرض
+     */
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
+    }
 }

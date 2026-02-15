@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Traits\HasTranslations;
 
 class Faq extends Model
 {
-    use HasTranslations;
+    use HasFactory, HasTranslations;
 
     protected $fillable = [
         'question_ar', // السؤال باللغة العربية
