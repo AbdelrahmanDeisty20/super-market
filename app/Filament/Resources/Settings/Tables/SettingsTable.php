@@ -1,31 +1,29 @@
 <?php
 
-namespace App\Filament\Resources\Categories\Tables;
+namespace App\Filament\Resources\Settings\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class CategoriesTable
+class SettingsTable
 {
     public static function configure(Table $table): Table
     {
         return $table
             ->columns([
-                TextColumn::make('id')
-                    ->label('ID')
-                    ->sortable(),
-                ImageColumn::make('image')
-                    ->square()
-                    ->label(__('Admin.fields.image'))
-                    ->disk('public')
-                    ->size(60),
-                TextColumn::make('name')
-                    ->label(__('Admin.fields.name'))
+                TextColumn::make('key')
+                    ->label(__('Admin.fields.key'))
                     ->searchable()
+                    ->sortable(),
+                TextColumn::make('type')
+                    ->label(__('Admin.fields.type'))
+                    ->sortable(),
+                TextColumn::make('created_at')
+                    ->label(__('Admin.fields.created_at'))
+                    ->dateTime()
                     ->sortable(),
             ])
             ->filters([

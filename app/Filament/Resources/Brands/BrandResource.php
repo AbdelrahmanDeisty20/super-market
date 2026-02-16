@@ -20,7 +20,9 @@ class BrandResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-tag';
 
-    protected static ?string $recordTitleAttribute = 'name';
+    protected static ?int $navigationSort = 2;
+
+    protected static ?string $recordTitleAttribute = 'name_ar';
 
     public static function getNavigationLabel(): string
     {

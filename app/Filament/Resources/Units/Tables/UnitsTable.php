@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\Categories\Tables;
+namespace App\Filament\Resources\Units\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class CategoriesTable
+class UnitsTable
 {
     public static function configure(Table $table): Table
     {
@@ -18,15 +17,19 @@ class CategoriesTable
                 TextColumn::make('id')
                     ->label('ID')
                     ->sortable(),
-                ImageColumn::make('image')
-                    ->square()
-                    ->label(__('Admin.fields.image'))
-                    ->disk('public')
-                    ->size(60),
-                TextColumn::make('name')
-                    ->label(__('Admin.fields.name'))
+                TextColumn::make('name_ar')
+                    ->label(__('Admin.fields.name_ar'))
                     ->searchable()
                     ->sortable(),
+                TextColumn::make('name_en')
+                    ->label(__('Admin.fields.name_en'))
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('created_at')
+                    ->label(__('Admin.fields.created_at'))
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

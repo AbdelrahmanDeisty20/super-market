@@ -15,6 +15,9 @@ class BrandsTable
     {
         return $table
             ->columns([
+                TextColumn::make('id')
+                    ->label('ID')
+                    ->sortable(),
                 ImageColumn::make('image')
                     ->label(__('Admin.fields.image'))
                     ->disk('public')
@@ -29,12 +32,14 @@ class BrandsTable
                 //
             ])
             ->recordActions([
-                EditAction::make(),
+                EditAction::make()
+                    ->label(__('Admin.actions.edit')),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
+                    DeleteBulkAction::make()
+                        ->label(__('Admin.actions.delete_bulk')),
+                ])->label(__('Admin.actions.bulk_actions')),
             ]);
     }
 }

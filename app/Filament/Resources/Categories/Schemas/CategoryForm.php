@@ -15,14 +15,17 @@ class CategoryForm
             ->components([
                 TextInput::make('name_ar')
                     ->label(__('Admin.fields.name_ar'))
+                    ->validationAttribute(__('Admin.fields.name_ar'))
                     ->required()
                     ->maxLength(255),
                 TextInput::make('name_en')
                     ->label(__('Admin.fields.name_en'))
+                    ->validationAttribute(__('Admin.fields.name_en'))
                     ->required()
                     ->maxLength(255),
                 FileUpload::make('image')
                     ->label(__('Admin.fields.image'))
+                    ->validationAttribute(__('Admin.fields.image'))
                     ->image()
                     ->disk('public')
                     ->directory('categories')
@@ -30,6 +33,7 @@ class CategoryForm
                     ->required(),
                 Toggle::make('is_visible')
                     ->label(__('Admin.fields.is_visible'))
+                    ->validationAttribute(__('Admin.fields.is_visible'))
                     ->default(true),
             ]);
     }
