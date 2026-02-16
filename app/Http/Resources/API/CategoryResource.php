@@ -22,6 +22,7 @@ class CategoryResource extends JsonResource
             'name' => $this->name, // Using localized name from HasTranslations trait
             'image' => $this->getImageUrl($this->image),
             'is_visible' => (bool) $this->is_visible,
+            'products' => ProductListResource::collection($this->whenLoaded('products')),
         ];
     }
 }

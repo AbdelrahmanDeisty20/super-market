@@ -34,7 +34,7 @@ class CategoryController extends Controller
         $result = $this->categoryService->getCategories();
 
         if (!$result['status']) {
-            return $this->error($result['message']);
+            return $this->error($result['message'], 404);
         }
 
         return $this->paginated(CategoryResource::class, $result['data']);
@@ -44,7 +44,7 @@ class CategoryController extends Controller
     {
         $result = $this->categoryService->getCategoryById($id);
         if (!$result['status']) {
-            return $this->error($result['message']);
+            return $this->error($result['message'], 404);
         }
         return $this->success($result['data'], $result['message']);
     }

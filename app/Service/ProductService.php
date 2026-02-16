@@ -194,4 +194,42 @@ class ProductService
             'data' => ProductListResource::collection($products)
         ];
     }
+
+    /**
+     * Recalculate the discount price for a product based on its active offers.
+     * Picks the best (lowest) price for the customer.
+     *
+     * @param Product $product
+     * @return void
+     */
+    public function recalculateDiscountPrice(Product $product)
+    {
+        $originalPrice = $product->price;
+        $bestPrice = $originalPrice;
+
+        // Load active offers
+        $offers = $product->offers()->where('is_active', true)->get();
+
+        foreach ($offers as $offer) {
+            $currentOfferPrice = $originalPrice;
+
+            if ($offer->type === 'fixed') {
+                $currentOfferPrice = max(0, $originalPrice - $offer->value);
+            } elseif ($offer->type === 'percentage') {
+                $currentOfferPrice = max(0, $originalPrice - ($originalPrice * ($offer->value / 100)));
+            }
+            // Add other types like BOGO if they affect price directly in the future
+
+            if ($currentOfferPrice < $bestPrice) {
+                $bestPrice = $currentOfferPrice;
+            }
+        }
+
+        // Update discount_price only if it's different from original
+        // If no offers or best price is same as original, we set discount_price to 0 or null?
+        // Let's stick to the current convention: discount_price = 0 means no discount if we want.
+        // But usually, setting it to the actual discount price is better for UI.
+        $product->discount_price = ($bestPrice < $originalPrice) ? $bestPrice : 0;
+        $product->save();
+    }
 }

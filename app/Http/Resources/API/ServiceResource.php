@@ -5,12 +5,8 @@ namespace App\Http\Resources\API;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-use App\Traits\HasImageUrls;
-
-class BrandResource extends JsonResource
+class ServiceResource extends JsonResource
 {
-    use HasImageUrls;
-
     /**
      * Transform the resource into an array.
      *
@@ -20,9 +16,8 @@ class BrandResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name, // Using the localized name from HasTranslations trait
-            'image' => $this->getImageUrl($this->image),
-            'products' => ProductListResource::collection($this->whenLoaded('products')),
+            'title' => $this->title, // Uses HasTranslations trait accessor
+            'content' => $this->content, // Uses HasTranslations trait accessor
         ];
     }
 }
