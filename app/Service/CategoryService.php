@@ -14,7 +14,8 @@ class CategoryService
      */
     public function getCategories()
     {
-        $categories = Category::where('is_visible', true)->paginate(10);
+        $categories = Category::where('is_visible', true)
+            ->paginate(10);
 
         if ($categories->isEmpty()) {
             return [
@@ -33,7 +34,7 @@ class CategoryService
 
     public function getCategoryById($id)
     {
-        $category = Category::find($id);
+        $category = Category::with(['products.unit', 'products.images', 'products.offers'])->find($id);
         if (!$category) {
             return [
                 'status' => false,

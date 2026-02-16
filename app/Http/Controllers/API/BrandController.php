@@ -28,7 +28,7 @@ class BrandController extends Controller
         $result = $this->brandService->getBrands();
 
         if (!$result['status']) {
-            return $this->error($result['message']);
+            return $this->error($result['message'], 404);
         }
 
         return $this->paginated(BrandResource::class, $result['data']);
@@ -39,7 +39,7 @@ class BrandController extends Controller
         $result = $this->brandService->getBrandById($id);
 
         if (!$result['status']) {
-            return $this->error($result['message']);
+            return $this->error($result['message'], 404);
         }
 
         return $this->success($result['data'], $result['message']);

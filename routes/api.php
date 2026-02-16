@@ -4,6 +4,8 @@ use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\API\Auth\VerificationController;
 use App\Http\Controllers\API\BrandController;
 use App\Http\Controllers\API\CategoryController;
+use App\Http\Controllers\API\CouponController;
+use App\Http\Controllers\API\OfferController;
 use App\Http\Controllers\API\ProductController;
 use App\Http\Middleware\setLang;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +37,19 @@ Route::middleware([setLang::class])->group(function () {
     Route::get('product/{id}/related', [ProductController::class, 'related']);
     Route::get('isFeatured', [ProductController::class, 'isFeatured']);
     Route::get('onSale', [ProductController::class, 'onSale']);
+
+    Route::get('offers', [OfferController::class, 'index']);
+    Route::get('offer/{id}', [OfferController::class, 'show']);
+
+    Route::get('coupons', [CouponController::class, 'index']);
+    Route::post('coupon/check', [CouponController::class, 'check']);
+    Route::get('settings', [\App\Http\Controllers\API\SettingController::class, 'index']);
+    Route::get('settings/{key}', [\App\Http\Controllers\API\SettingController::class, 'show']);
+
+    Route::get('services', [\App\Http\Controllers\API\ServiceController::class, 'index']);
+    Route::get('pages', [\App\Http\Controllers\API\PageController::class, 'index']);
+    Route::get('pages/{slug}', [\App\Http\Controllers\API\PageController::class, 'show']);
+    Route::post('contact', [\App\Http\Controllers\API\ContactController::class, 'store']);
 
     // Protected routes
     Route::middleware(['auth:sanctum', 'verified'])->group(function () {

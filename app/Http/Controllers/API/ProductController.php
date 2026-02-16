@@ -31,7 +31,7 @@ class ProductController extends Controller
         $result = $this->productService->getProducts($request->all());
 
         if (!$result['status']) {
-            return $this->error($result['message']);
+            return $this->error($result['message'], 404);
         }
 
         return $this->paginated(ProductResource::class, $result['data']);
@@ -48,7 +48,7 @@ class ProductController extends Controller
         $result = $this->productService->getProductById($id);
 
         if (!$result['status']) {
-            return $this->error($result['message']);
+            return $this->error($result['message'], 404);
         }
 
         return $this->success($result['data'], $result['message']);
@@ -59,7 +59,7 @@ class ProductController extends Controller
         $result = $this->productService->isFeatured();
 
         if (!$result['status']) {
-            return $this->error($result['message']);
+            return $this->error($result['message'], 404);
         }
 
         return $this->paginated(ProductListResource::class, $result['data']);
@@ -70,7 +70,7 @@ class ProductController extends Controller
         $result = $this->productService->onSale();
 
         if (!$result['status']) {
-            return $this->error($result['message']);
+            return $this->error($result['message'], 404);
         }
 
         return $this->paginated(ProductListResource::class, $result['data']);
@@ -81,7 +81,7 @@ class ProductController extends Controller
         $result = $this->productService->getRelatedProducts($id);
 
         if (!$result['status']) {
-            return $this->error($result['message']);
+            return $this->error($result['message'], 404);
         }
 
         return $this->success($result['data'], $result['message']);
@@ -92,7 +92,7 @@ class ProductController extends Controller
         $result = $this->productService->getMayLikeProducts();
 
         if (!$result['status']) {
-            return $this->error($result['message']);
+            return $this->error($result['message'], 404);
         }
 
         return $this->success($result['data'], $result['message']);

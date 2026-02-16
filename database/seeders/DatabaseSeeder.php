@@ -34,6 +34,9 @@ class DatabaseSeeder extends Seeder
             CouponSeeder::class,
             OfferSeeder::class,
             TestimonialSeeder::class,
+            SettingSeeder::class,
+            PageSeeder::class,
+            ServiceSeeder::class,
         ]);
     }
 }

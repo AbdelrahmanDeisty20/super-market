@@ -33,7 +33,7 @@ class BrandService
 
     public function getBrandById($id)
     {
-        $brand = Brand::find($id);
+        $brand = Brand::with(['products.unit', 'products.images', 'products.offers'])->find($id);
 
         if (!$brand) {
             return [

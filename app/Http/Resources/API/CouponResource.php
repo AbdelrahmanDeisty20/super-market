@@ -2,13 +2,11 @@
 
 namespace App\Http\Resources\API;
 
-use App\Traits\HasImageUrls;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class OfferResource extends JsonResource
+class CouponResource extends JsonResource
 {
-    use HasImageUrls;
     /**
      * Transform the resource into an array.
      *
@@ -18,14 +16,15 @@ class OfferResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->title, // Localized title
-            'description' => $this->description, // Localized description
-            'image' => $this->getImageUrl($this->image) ?? '',
+            'code' => $this->code,
             'type' => $this->type,
             'value' => (float) $this->value,
+            'min_order_value' => (float) $this->min_order_value,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
-            'products' => ProductListResource::collection($this->whenLoaded('products')),
+            'usage_limit' => $this->usage_limit,
+            'used_count' => $this->used_count,
+            'is_active' => (bool) $this->is_active,
         ];
     }
 }

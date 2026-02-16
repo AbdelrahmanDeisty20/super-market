@@ -11,6 +11,7 @@ class Page extends Model
     use HasTranslations;
 
     protected $fillable = [
+        'slug',
         'title_ar', // عنوان الصفحة بالعربية
         'title_en', // عنوان الصفحة بالإنجليزية
         'content_ar', // محتوى الصفحة بالعربية
