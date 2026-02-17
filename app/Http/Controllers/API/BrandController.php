@@ -31,7 +31,8 @@ class BrandController extends Controller
             return $this->error($result['message'], 404);
         }
 
-        return $this->paginated(BrandResource::class, $result['data']);
+        $message = $result['data']->isEmpty() ? __('messages.No brands found yet') : __('messages.Brands fetched successfully');
+        return $this->paginated(BrandResource::class, $result['data'], $message);
     }
 
     public function show($id)

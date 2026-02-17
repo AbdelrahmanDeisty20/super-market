@@ -37,7 +37,8 @@ class CategoryController extends Controller
             return $this->error($result['message'], 404);
         }
 
-        return $this->paginated(CategoryResource::class, $result['data']);
+        $message = $result['data']->isEmpty() ? __('messages.No categories found yet') : __('messages.Categories fetched successfully');
+        return $this->paginated(CategoryResource::class, $result['data'], $message);
     }
 
     public function show($id)

@@ -17,5 +17,50 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        $exceptions->render(function (\Illuminate\Auth\AuthenticationException $e, \Illuminate\Http\Request $request) {
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'status' => false,
+                    'message' => __('messages.Unauthenticated. Please login to continue'),
+                    'data' => [],
+                ], 401);
+            }
+        });
+
+        $exceptions->render(function (\Symfony\Component\HttpKernel\Exception\NotFoundHttpException $e, \Illuminate\Http\Request $request) {
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'status' => false,
+                    'message' => __('messages.Resource not found'),
+                    'data' => [],
+                ], 404);
+            }
+        });
+
+        $exceptions->render(function (\Illuminate\Validation\ValidationException $e, \Illuminate\Http\Request $request) {
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'status' => false,
+                    'message' => $e->getMessage(),
+                    'data' => $e->errors(),
+                ], 422);
+            }
+        });
+
+        $exceptions->render(function (\Throwable $e, \Illuminate\Http\Request $request) {
+            if ($request->is('api/*')) {
+                $status = 500;
+                if (method_exists($e, 'getStatusCode')) {
+                    $status = $e->getStatusCode();
+                } elseif (property_exists($e, 'status')) {
+                    $status = $e->status;
+                }
+
+                return response()->json([
+                    'status' => false,
+                    'message' => $e->getMessage(),
+                    'error_type' => class_basename($e)
+                ], $status);
+            }
+        });
     })->create();
