@@ -22,7 +22,7 @@ class AuthService
             'role' => $data['role'] ?? 'user',
         ]);
 
-        event(new Registered($user));
+        \event(new Registered($user));
 
         // Note: Real_estate doesn't generate token on register if verification is required.
         // We will return the user object, and let the controller decide response format.
@@ -39,13 +39,13 @@ class AuthService
 
         if (!$user || !Hash::check($data['password'], $user->password)) {
             throw ValidationException::withMessages([
-                'email' => [__('messages.Invalid credentials')],
+                'email' => [\__('messages.Invalid credentials')],
             ]);
         }
 
         if (!$user->hasVerifiedEmail()) {
             throw ValidationException::withMessages([
-                'email' => [__('messages.Your email address is not verified')],
+                'email' => [\__('messages.Your email address is not verified')],
             ]);
         }
 
@@ -55,6 +55,11 @@ class AuthService
     public function logout(User $user)
     {
         $user->currentAccessToken()->delete();
+    }
+
+    public function logoutAll(User $user)
+    {
+        $user->tokens()->delete();
     }
 
     public function updateProfile(User $user, array $data)
@@ -78,7 +83,7 @@ class AuthService
             // Verify current password
             if (!isset($data['current_password']) || !Hash::check($data['current_password'], $user->password)) {
                 throw ValidationException::withMessages([
-                    'current_password' => [__('messages.Invalid credentials')], // Or specific message
+                    'current_password' => [\__('messages.Invalid credentials')], // Or specific message
                 ]);
             }
             // Password is hashed by mutator, but if passed as array to update,

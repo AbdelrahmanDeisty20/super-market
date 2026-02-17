@@ -1,5 +1,8 @@
 <?php
 
+
+use Illuminate\Http\Request;
+
 use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\API\Auth\VerificationController;
 use App\Http\Controllers\API\BrandController;
@@ -7,6 +10,8 @@ use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\CouponController;
 use App\Http\Controllers\API\OfferController;
 use App\Http\Controllers\API\ProductController;
+use App\Http\Controllers\API\UnitController;
+use App\Http\Controllers\API\UserAddressController;
 use App\Http\Middleware\setLang;
 use Illuminate\Support\Facades\Route;
 
@@ -51,11 +56,59 @@ Route::middleware([setLang::class])->group(function () {
     Route::get('pages/{slug}', [\App\Http\Controllers\API\PageController::class, 'show']);
     Route::post('contact', [\App\Http\Controllers\API\ContactController::class, 'store']);
 
+    Route::get('units', [UnitController::class, 'index']);
+    Route::get('banners', [\App\Http\Controllers\API\BannerController::class, 'index']);
+    Route::get('faqs', [\App\Http\Controllers\API\FaqController::class, 'index']);
+    Route::get('testimonials', [\App\Http\Controllers\API\TestimonialController::class, 'index']);
+    Route::get('reviews/{product_id}', [\App\Http\Controllers\API\ReviewController::class, 'index']);
+
     // Protected routes
     Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('profile', [AuthController::class, 'profile']);
         Route::put('profile', [AuthController::class, 'update']);
         Route::post('logout', [AuthController::class, 'logout']);
+        Route::post('logout-all', [AuthController::class, 'logoutAll']);
         Route::delete('profile', [AuthController::class, 'destroy']);
+
+        // Measurement Units
+        Route::get('units', [UnitController::class, 'index']);
+
+        // User Addresses
+        Route::delete('addresses/delete-all', [UserAddressController::class, 'deleteAll']);
+        Route::delete('addresses/{id}', [UserAddressController::class, 'destroy']);
+        Route::apiResource('addresses', UserAddressController::class)->except(['destroy']);
+
+        // Wishlist
+        Route::get('wishlist', [\App\Http\Controllers\API\WhishlistController::class, 'index']);
+        Route::post('wishlist', [\App\Http\Controllers\API\WhishlistController::class, 'toggle']);
+        Route::delete('wishlist', [\App\Http\Controllers\API\WhishlistController::class, 'destroy']);
+
+        // Review CRUD
+        Route::get('my-reviews', [\App\Http\Controllers\API\ReviewController::class, 'myReviews']);
+        Route::delete('reviews/delete-all', [\App\Http\Controllers\API\ReviewController::class, 'deleteAll']);
+        Route::post('review', [\App\Http\Controllers\API\ReviewController::class, 'store']);
+        Route::put('review/{id}', [\App\Http\Controllers\API\ReviewController::class, 'update']);
+        Route::delete('review/{id}', [\App\Http\Controllers\API\ReviewController::class, 'destroy']);
+
+        // Testimonial CRUD
+        Route::get('my-testimonials', [\App\Http\Controllers\API\TestimonialController::class, 'myTestimonials']);
+        Route::delete('testimonials/delete-all', [\App\Http\Controllers\API\TestimonialController::class, 'deleteAll']);
+        Route::post('testimonial', [\App\Http\Controllers\API\TestimonialController::class, 'store']);
+        Route::put('testimonial/{id}', [\App\Http\Controllers\API\TestimonialController::class, 'update']);
+        Route::delete('testimonial/{id}', [\App\Http\Controllers\API\TestimonialController::class, 'destroy']);
+
+        // Cart (سلة التسوق)
+        Route::get('cart', [\App\Http\Controllers\API\CartController::class, 'index']);
+        Route::post('cart', [\App\Http\Controllers\API\CartController::class, 'store']);
+        Route::put('cart/{item_id}', [\App\Http\Controllers\API\CartController::class, 'update']);
+        Route::delete('cart/{item_id}', [\App\Http\Controllers\API\CartController::class, 'destroy']);
+        Route::delete('cart', [\App\Http\Controllers\API\CartController::class, 'clear']);
+
+        // Orders (الطلبات)
+        Route::get('orders', [\App\Http\Controllers\API\OrderController::class, 'index']);
+        Route::get('order/{id}', [\App\Http\Controllers\API\OrderController::class, 'show']);
+        Route::post('order', [\App\Http\Controllers\API\OrderController::class, 'store']);
+        Route::put('order/{id}', [\App\Http\Controllers\API\OrderController::class, 'update']);
+        Route::put('order/{id}/cancel', [\App\Http\Controllers\API\OrderController::class, 'cancel']);
     });
 });

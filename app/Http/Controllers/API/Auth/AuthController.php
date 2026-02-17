@@ -9,6 +9,7 @@ use App\Http\Requests\API\Auth\UpdateProfileRequest;
 use App\Service\AuthService;
 use App\Traits\ApiResponse;
 use App\Http\Resources\API\UserResource;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
@@ -40,17 +41,23 @@ class AuthController extends Controller
         $result = $this->authService->login($request->validated());
 
         $data = [
+            'token' => $result['token'],
             'user' => new UserResource($result['user']),
-            'token' => $result['token']
         ];
 
         return $this->success($data, __('messages.Login successful'));
     }
 
-    public function logout(Request $request)
+    public function logout(Request $request): JsonResponse
     {
         $this->authService->logout($request->user());
         return $this->success([], __('messages.Logged out successfully'));
+    }
+
+    public function logoutAll(Request $request): JsonResponse
+    {
+        $this->authService->logoutAll($request->user());
+        return $this->success([], __('messages.Logged out from all devices successfully'));
     }
 
     public function profile(Request $request)
@@ -69,5 +76,4 @@ class AuthController extends Controller
         $this->authService->deleteProfile($request->user());
         return $this->success([], __('messages.Account deleted successfully'));
     }
-
 }

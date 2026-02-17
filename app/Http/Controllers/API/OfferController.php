@@ -32,7 +32,8 @@ class OfferController extends Controller
             return $this->error($result['message'], 404);
         }
 
-        return $this->paginated(OfferResource::class,$result['data']);
+        $message = $result['data']->isEmpty() ? __('messages.No offers found yet') : __('messages.Offers fetched successfully');
+        return $this->paginated(OfferResource::class, $result['data'], $message);
     }
 
     /**
