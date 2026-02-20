@@ -5,7 +5,7 @@ namespace App\Http\Resources\API;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PageResource extends JsonResource
+class UserAddressResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,10 +16,9 @@ class PageResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'slug' => $this->slug,
-            'title' => $this->title, // Uses HasTranslations trait accessor
-            'content' => $this->content, // Uses HasTranslations trait accessor
-            'sections' => $this->sections,
+            'label' => $this->label,
+            'address' => $this->address,
+            'is_default' => (bool) $this->is_default,
         ];
     }
 }

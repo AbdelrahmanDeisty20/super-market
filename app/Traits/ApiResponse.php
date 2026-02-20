@@ -81,11 +81,11 @@ trait ApiResponse
      * @param mixed $data
      * @return JsonResponse
      */
-    public function paginated($resource, $data): JsonResponse
+    public function paginated($resource, $data, $message = "success"): JsonResponse
     {
         return response()->json([
             'status' => true,
-            'message' => 'success',
+            'message' => $message,
             'data' => $resource::collection($data->items()),
             'pagination' => [
                 'current_page' => $data->currentPage(),

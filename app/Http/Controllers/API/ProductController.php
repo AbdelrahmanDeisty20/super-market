@@ -34,7 +34,8 @@ class ProductController extends Controller
             return $this->error($result['message'], 404);
         }
 
-        return $this->paginated(ProductResource::class, $result['data']);
+        $message = $result['data']->isEmpty() ? __('messages.No products found yet') : __('messages.Products fetched successfully');
+        return $this->paginated(ProductResource::class, $result['data'], $message);
     }
 
     /**
