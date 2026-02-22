@@ -142,5 +142,23 @@ return [
         'delete_bulk' => 'Delete Selected',
         'list' => 'List',
     ],
+    'widgets' => [
+        'orders_chart' => [
+            'heading' => 'Sales Statistics',
+            'label' => 'Daily Sales',
+        ],
+        'inventory_chart' => [
+            'heading' => 'Inventory Alerts (Less than 10)',
+            'label' => 'Current Quantity',
+        ],
+        'stats' => [
+            'orders' => 'Total Orders',
+            'orders_desc' => 'Total number of orders in the system',
+            'revenue' => 'Total Revenue',
+            'revenue_desc' => 'Sum of all sales',
+            'customers' => 'Total Customers',
+            'customers_desc' => 'Total registered subscribers',
+        ],
+    ],
     'brand_name' => 'Super Market',
 ];

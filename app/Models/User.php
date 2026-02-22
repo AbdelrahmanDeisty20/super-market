@@ -9,18 +9,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail, FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
      */
-
-
     protected $fillable = [
         'name', // اسم المستخدم الكامل
         'email', // البريد الإلكتروني (فريد)
@@ -30,6 +30,7 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
         'image', // مسار صورة الملف الشخصي
         'role', // دور المستخدم (أدمن أو مستخدم عادي)
     ];
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -39,6 +40,7 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
         'password',
         'remember_token',
     ];
+
     /**
      * Get the attributes that should be cast.
      *
@@ -51,9 +53,10 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
             'password' => 'hashed',
         ];
     }
+
     public function canAccessPanel(Panel $panel): bool
     {
-        return true;
+        return $this->hasRole('super_admin');
     }
 
     /**
@@ -61,7 +64,7 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
      */
     public function addresses()
     {
-        return $this->hasMany(UserAddress::class); // علاقة واحد لمتعدد مع العناوين
+        return $this->hasMany(UserAddress::class);  // علاقة واحد لمتعدد مع العناوين
     }
 
     /**
@@ -69,7 +72,7 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
      */
     public function orders()
     {
-        return $this->hasMany(Order::class); // علاقة واحد لمتعدد مع الطلبات
+        return $this->hasMany(Order::class);  // علاقة واحد لمتعدد مع الطلبات
     }
 
     /**
@@ -77,7 +80,7 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
      */
     public function cart()
     {
-        return $this->hasOne(Cart::class); // علاقة واحد لواحد مع السلة
+        return $this->hasOne(Cart::class);  // علاقة واحد لواحد مع السلة
     }
 
     /**
@@ -85,7 +88,7 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
      */
     public function reviews()
     {
-        return $this->hasMany(Review::class); // علاقة واحد لمتعدد مع التقييمات
+        return $this->hasMany(Review::class);  // علاقة واحد لمتعدد مع التقييمات
     }
 
     /**
@@ -93,7 +96,7 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
      */
     public function wishlists()
     {
-        return $this->hasMany(Whishlist::class); // علاقة واحد لمتعدد مع المفضلات
+        return $this->hasMany(Whishlist::class);  // علاقة واحد لمتعدد مع المفضلات
     }
 
     public function notifications()
