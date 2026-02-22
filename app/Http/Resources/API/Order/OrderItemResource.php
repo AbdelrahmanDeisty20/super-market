@@ -16,9 +16,10 @@ class OrderItemResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'product' => new \App\Http\Resources\API\ProductResource($this->product),
-            'quantity' => $this->quantity,
-            'price' => $this->price,
+            'product' => new \App\Http\Resources\API\ProductListResource($this->product),
+            'discount' => round(($this->product->price - $this->price) * $this->quantity, 2),
+            'quantity' => (int)$this->quantity,
+            'price' => (float)$this->price,
             'item_total' => round($this->price * $this->quantity, 2),
         ];
     }

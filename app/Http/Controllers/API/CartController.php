@@ -28,7 +28,7 @@ class CartController extends Controller
     public function index(Request $request): JsonResponse
     {
         $cart = $this->cartService->getCart($request->user());
-        $cart->load('items.product');
+        $cart->load('items.product.images');
 
         if ($cart->items->isEmpty()) {
             return $this->success([], \__('messages.Cart is empty'));

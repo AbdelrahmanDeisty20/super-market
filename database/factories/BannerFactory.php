@@ -18,9 +18,9 @@ class BannerFactory extends Factory
     {
         return [
             'image' => 'banners/' . $this->faker->image(null, 1200, 400, null, false),
-            'title_ar' => $this->faker->word() . ' عنوان بنر',
+            'title_ar' => 'عرض خاص على منتجات ' . $this->faker->word(),
             'title_en' => $this->faker->word(),
-            'description_ar' => $this->faker->sentence() . ' وصف بنر',
+            'description_ar' => 'احصل على أفضل الأسعار والجودة العالية عند تسوقك اليوم من سوبر ماركت الياسمين.',
             'description_en' => $this->faker->sentence(),
             'url' => $this->faker->url(),
             'is_active' => true,

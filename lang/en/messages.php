@@ -129,7 +129,7 @@ return [
     "product" => "product",
     "rating" => "rating",
     "comment" => "comment",
-    "Unauthenticated. Please login to continue" => "Unauthenticated. Please login to continue",
+    "unauthenticated" => "Unauthenticated. Please login to continue",
 
     // Cart (سلة التسوق)
     "Cart fetched successfully" => "Cart fetched successfully",
@@ -138,6 +138,8 @@ return [
     "Item removed from cart successfully" => "Item removed from cart successfully",
     "Cart cleared successfully" => "Cart cleared successfully",
     "Cart is empty" => "Your cart is empty. Please add items before placing an order",
+    "Insufficient stock" => "Insufficient stock",
+    "Requested quantity not available" => "Requested quantity not available",
 
     // Orders (الطلبات)
     "Orders fetched successfully" => "Orders fetched successfully",
@@ -148,4 +150,10 @@ return [
     "Order updated successfully" => "Order updated successfully",
     "Order cannot be updated" => "This order cannot be updated",
     "No orders found yet" => "No orders found yet",
+    'Notification marked as read' => 'Notification marked as read',
+    'All notifications marked as read' => 'All notifications marked as read',
+    'Notifications fetched successfully' => 'Notifications fetched successfully',
+    'FCM Token updated successfully' => 'FCM Token updated successfully',
+    'Order Created' => 'Order Created',
+    'Your order has been placed successfully. Order ID: ' => 'Your order has been placed successfully. Order ID: ',
 ];

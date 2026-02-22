@@ -20,6 +20,7 @@ class AuthService
             'password' => $data['password'], // User model handles hashing via mutator
             'phone' => $data['phone'] ?? '',
             'role' => $data['role'] ?? 'user',
+            'fcm_token' => $data['fcm_token'] ?? '',
         ]);
 
         \event(new Registered($user));
@@ -47,6 +48,11 @@ class AuthService
             throw ValidationException::withMessages([
                 'email' => [\__('messages.Your email address is not verified')],
             ]);
+        }
+
+        // تحديث الـ FCM Token عند كل عملية دخول لضمان صحته
+        if (isset($data['fcm_token'])) {
+            $user->update(['fcm_token' => $data['fcm_token']]);
         }
 
         return $this->generateTokenResponse($user);

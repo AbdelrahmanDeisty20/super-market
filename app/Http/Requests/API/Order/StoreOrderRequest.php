@@ -25,6 +25,7 @@ class StoreOrderRequest extends FormRequest
             'address_id' => 'required|exists:user_addresses,id',
             'delivery_date' => 'required|date|after_or_equal:today',
             'delivery_time' => 'required|date_format:H:i',
+            'coupon_code' => 'sometimes|nullable|string|exists:coupons,code',
         ];
     }
 }

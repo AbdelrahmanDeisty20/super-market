@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('products', function (Blueprint $table) {
-            $table->dropColumn('is_on_sale');
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('fcm_token')->nullable()->after('password');
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('products', function (Blueprint $table) {
-            $table->boolean('is_on_sale')->default(false);
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('fcm_token');
         });
     }
 };

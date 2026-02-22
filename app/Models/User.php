@@ -22,12 +22,13 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
      * @var list<string>
      */
     protected $fillable = [
-        'name',  // اسم المستخدم الكامل
-        'email',  // البريد الإلكتروني (فريد)
-        'phone',  // رقم الهاتف للتواصل/التوصيل
-        'password',  // كلمة المرور المشفرة
-        'image',  // مسار صورة الملف الشخصي
-        'role',  // دور المستخدم (أدمن أو مستخدم عادي)
+        'name', // اسم المستخدم الكامل
+        'email', // البريد الإلكتروني (فريد)
+        'phone', // رقم الهاتف للتواصل/التوصيل
+        'password', // كلمة المرور المشفرة
+        'fcm_token', // للاشعارات Firebase
+        'image', // مسار صورة الملف الشخصي
+        'role', // دور المستخدم (أدمن أو مستخدم عادي)
     ];
 
     /**
@@ -98,6 +99,10 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
         return $this->hasMany(Whishlist::class);  // علاقة واحد لمتعدد مع المفضلات
     }
 
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class); // علاقة واحد لمتعدد مع الإشعارات
+    }
     /**
      * Send the email verification notification.
      *

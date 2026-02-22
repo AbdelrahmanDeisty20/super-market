@@ -14,6 +14,29 @@ class CartResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        $items = $this->items;
+        $subTotal = $items->sum(function ($item) {
+            $product = $item->product;
+            $currentPrice = $product->discount_price > 0 ? $product->discount_price : $product->price;
+            return $item->quantity * $currentPrice;
+        });
+
+        $totalDiscount = $items->sum(function ($item) {
+            $product = $item->product;
+            $discountPerItem = $product->price - ($product->discount_price > 0 ? $product->discount_price : $product->price);
+            return $item->quantity * $discountPerItem;
+        });
+
+        $deliveryFee = (float) \App\Models\Setting::getValue('min_delivery_fee', 30);
+
+        return [
+            'id' => $this->id,
+            'items' => CartItemResource::collection($items),
+            'count' => $items->count(),
+            'total_discount' => round($totalDiscount, 2),
+            'sub_total' => round($subTotal, 2),
+            'delivery_fee' => $deliveryFee,
+            'total' => round($subTotal + $deliveryFee, 2),
+        ];
     }
 }

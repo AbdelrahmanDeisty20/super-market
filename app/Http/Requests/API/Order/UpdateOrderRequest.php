@@ -20,9 +20,9 @@ class UpdateOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'address_id' => 'sometimes|exists:user_addresses,id', // معرف العنوان (اختياري)
-            'delivery_date' => 'sometimes|date|after_or_equal:today', // تاريخ التوصيل (اختياري)
-            'delivery_time' => 'sometimes|date_format:H:i', // وقت التوصيل (اختياري)
+            'address_id' => 'nullable|exists:user_addresses,id', // معرف العنوان (اختياري)
+            'delivery_date' => 'nullable|date|after_or_equal:today', // تاريخ التوصيل (اختياري)
+            'delivery_time' => 'nullable|date_format:H:i', // وقت التوصيل (اختياري)
         ];
     }
 }

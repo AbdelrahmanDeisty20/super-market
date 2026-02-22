@@ -20,7 +20,7 @@ class UpdateCartItemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'quantity' => 'required|integer|min:1', // الكمية الجديدة
+            'quantity' => 'nullable|integer|min:1', // الكمية الجديدة
         ];
     }
 }

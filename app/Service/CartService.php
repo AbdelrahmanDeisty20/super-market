@@ -23,13 +23,20 @@ class CartService
     {
         return DB::transaction(function () use ($user, $data) {
             $cart = $this->getCart($user);
+            $product = \App\Models\Product::findOrFail($data['product_id']);
 
             $cartItem = $cart->items()->where('product_id', $data['product_id'])->first();
+            $currentQuantity = $cartItem ? $cartItem->quantity : 0;
+            $newQuantity = $currentQuantity + $data['quantity'];
+
+            if ($product->stock < $newQuantity) {
+                throw new \Exception(\__('messages.Insufficient stock'));
+            }
 
             if ($cartItem) {
                 // Item exists, update quantity
                 $cartItem->update([
-                    'quantity' => $cartItem->quantity + $data['quantity']
+                    'quantity' => $newQuantity
                 ]);
             } else {
                 // Create new item
@@ -49,9 +56,13 @@ class CartService
     public function updateQuantity(User $user, $itemId, $quantity)
     {
         $cart = $this->getCart($user);
-        $cartItem = $cart->items()->where('id', $itemId)->firstOrFail();
+        $cartItem = $cart->items()->where('id', $itemId)->with('product')->firstOrFail();
 
-        $cartItem->update(['quantity' => $quantity]);
+        if ($cartItem->product->stock < $quantity) {
+            throw new \Exception(\__('messages.Requested quantity not available'));
+        }
+
+        $cartItem->update(['quantity' => $quantity ?? $cartItem->quantity]);
 
         return $cart->load(['items.product']);
     }

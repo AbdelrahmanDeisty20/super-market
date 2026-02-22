@@ -14,17 +14,25 @@ class OrderResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $items = $this->items;
+        $totalItemsDiscount = $items->sum(function ($item) {
+            // Note: $this->product->price is the base price, $this->price is the price stored at order time
+            return (float) (($item->product->price - $item->price) * $item->quantity);
+        });
+
         return [
             'id' => $this->id,
             'status' => $this->status,
             'delivery_date' => $this->delivery_date,
             'delivery_time' => $this->delivery_time,
-            'subtotal' => $this->subtotal,
-            'delivery_fee' => $this->delivery_fee,
-            'total' => $this->total,
+            'items_count' => $this->items_count ?? $items->count(),
+            'total_item_discount' => round($totalItemsDiscount, 2),
+            'coupon_discount' => (float) $this->discount,
+            'subtotal' => (float) $this->subtotal,
+            'delivery_fee' => (float) $this->delivery_fee,
+            'total' => (float) $this->total,
             'address' => new \App\Http\Resources\API\UserAddressResource($this->whenLoaded('address')),
             'items' => OrderItemResource::collection($this->whenLoaded('items')),
-            'items_count' => $this->items_count ?? $this->items->count(),
             'created_at' => $this->created_at,
         ];
     }
