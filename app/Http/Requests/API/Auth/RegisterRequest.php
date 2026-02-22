@@ -30,6 +30,7 @@ class RegisterRequest extends FormRequest
                 'regex:/^01[0125][0-9]{8}$/',
             ],
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'fcm_token' => 'nullable|string',
         ];
     }
 

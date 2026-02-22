@@ -18,7 +18,7 @@ class TestimonialFactory extends Factory
     public function definition(): array
     {
         return [
-            'comment' => $this->faker->paragraph() . ' تعليق عميل بالعربي',
+            'comment' => 'تجربة شراء ممتازة ومنتجات طازجة دائماً، خدمة التوصيل سريعة جداً والمعاملة في منتهى الرقي.',
             'rating' => $this->faker->numberBetween(1, 5),
             'user_id' => User::factory(),
         ];

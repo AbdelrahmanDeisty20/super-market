@@ -12,7 +12,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->api(append: [
+        $middleware->api(prepend: [
             \App\Http\Middleware\setLang::class,
         ]);
     })
@@ -21,7 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
             if ($request->is('api/*')) {
                 return response()->json([
                     'status' => false,
-                    'message' => __('messages.Unauthenticated. Please login to continue'),
+                    'message' => __('messages.unauthenticated'),
                     'data' => [],
                 ], 401);
             }

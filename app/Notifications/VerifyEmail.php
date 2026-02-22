@@ -7,8 +7,17 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class VerifyEmail extends VerifyEmailBase
+class VerifyEmail extends VerifyEmailBase implements ShouldQueue
 {
+    use Queueable;
+
+    /**
+     * Create a new notification instance.
+     */
+    public function __construct()
+    {
+        $this->locale = app()->getLocale();
+    }
 
     /**
      * Get the mail representation of the notification.

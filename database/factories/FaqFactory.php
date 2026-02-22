@@ -17,9 +17,9 @@ class FaqFactory extends Factory
     public function definition(): array
     {
         return [
-            'question_ar' => $this->faker->sentence() . '؟',
-            'question_en' => $this->faker->sentence() . '?',
-            'answer_ar' => $this->faker->paragraph() . ' اجابة بالعربي',
+            'question_ar' => 'هل تتوفر خدمة التوصيل لمناطق بعيدة؟',
+            'question_en' => 'Is delivery available to remote areas?',
+            'answer_ar' => 'نعم، نحن نوفر خدمة التوصيل لجميع المناطق داخل المدينة خلال ٢٤ ساعة من تأكيد الطلب.',
             'answer_en' => $this->faker->paragraph(),
         ];
     }

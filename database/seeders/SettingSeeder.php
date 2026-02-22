@@ -13,11 +13,11 @@ class SettingSeeder extends Seeder
     public function run(): void
     {
         $settings = [
-            ['key' => 'site_name', 'value' => 'Super Market', 'type' => 'text'],
+            ['key' => 'site_name', 'value' => 'سوبر ماركت الياسمين', 'type' => 'text'],
             ['key' => 'site_logo', 'value' => 'settings/logo.png', 'type' => 'image'],
-            ['key' => 'contact_email', 'value' => 'contact@supermarket.com', 'type' => 'text'],
-            ['key' => 'contact_phone', 'value' => json_encode(['01234567890', '01122334455']), 'type' => 'json'],
-            ['key' => 'address', 'value' => '123 Market St, Cairo, Egypt', 'type' => 'text'],
+            ['key' => 'contact_email', 'value' => 'info@yasmine-market.com', 'type' => 'text'],
+            ['key' => 'contact_phone', 'value' => json_encode(['01012345678', '01212345678']), 'type' => 'json'],
+            ['key' => 'address', 'value' => '١٥ شارع التحرير، الدقي، الجيزة، مصر', 'type' => 'text'],
             ['key' => 'facebook_link', 'value' => 'https://facebook.com/supermarket', 'type' => 'text'],
             ['key' => 'instagram_link', 'value' => 'https://instagram.com/supermarket', 'type' => 'text'],
             ['key' => 'whatsapp_number', 'value' => '01234567890', 'type' => 'text'],

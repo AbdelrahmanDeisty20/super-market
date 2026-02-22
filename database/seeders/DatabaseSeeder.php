@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'Admin User',
                 'password' => bcrypt('password'),
+                'email_verified_at' => now(),
             ]
         );
 
@@ -28,6 +29,8 @@ class DatabaseSeeder extends Seeder
             BrandSeeder::class,
             UnitSeeder::class,
             ProductSeeder::class,
+            UserAddressSeeder::class,
+            OrderSeeder::class,
             BannerSeeder::class,
             FaqSeeder::class,
             ServiceSeeder::class,
@@ -36,7 +39,6 @@ class DatabaseSeeder extends Seeder
             TestimonialSeeder::class,
             SettingSeeder::class,
             PageSeeder::class,
-            ServiceSeeder::class,
         ]);
     }
 }

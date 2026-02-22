@@ -12,6 +12,7 @@ use App\Http\Controllers\API\OfferController;
 use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\UnitController;
 use App\Http\Controllers\API\UserAddressController;
+use App\Http\Controllers\API\NotificationController;
 use App\Http\Middleware\setLang;
 use Illuminate\Support\Facades\Route;
 
@@ -69,6 +70,14 @@ Route::middleware([setLang::class])->group(function () {
         Route::post('logout', [AuthController::class, 'logout']);
         Route::post('logout-all', [AuthController::class, 'logoutAll']);
         Route::delete('profile', [AuthController::class, 'destroy']);
+
+        // FCM Token
+        Route::post('profile/fcm-token', [NotificationController::class, 'updateToken']);
+
+        // Notifications
+        Route::get('notifications', [NotificationController::class, 'index']);
+        Route::put('notifications/{id}/read', [NotificationController::class, 'markAsRead']);
+        Route::put('notifications/read-all', [NotificationController::class, 'markAllAsRead']);
 
         // Measurement Units
         Route::get('units', [UnitController::class, 'index']);

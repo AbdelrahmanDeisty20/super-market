@@ -13,7 +13,7 @@ class Setting extends Model
 
     /**
      * Get setting value by key.
-     * 
+     *
      * @param string $key
      * @param mixed $default
      * @return mixed

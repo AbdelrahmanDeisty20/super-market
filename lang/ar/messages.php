@@ -129,7 +129,7 @@ return [
     "product" => "المنتج",
     "rating" => "التقييم",
     "comment" => "التعليق",
-    "Unauthenticated. Please login to continue" => "غير مصرح لك بالدخول، يرجى تسجيل الدخول للمتابعة",
+    "unauthenticated" => "غير مصرح لك بالدخول، يرجى تسجيل الدخول للمتابعة",
 
     // Cart (سلة التسوق)
     "Cart fetched successfully" => "تم جلب سلة التسوق بنجاح",
@@ -138,6 +138,8 @@ return [
     "Item removed from cart successfully" => "تم إزالة المنتج من السلة بنجاح",
     "Cart cleared successfully" => "تم تفريغ السلة بنجاح",
     "Cart is empty" => "السلة فارغة، يرجى إضافة منتجات قبل إتمام الطلب",
+    "Insufficient stock" => "الكمية المطلوبة غير متوفرة في المخزن",
+    "Requested quantity not available" => "الكمية المطلوبة غير متاحة",
 
     // Orders (الطلبات)
     "Orders fetched successfully" => "تم جلب الطلبات بنجاح",
@@ -148,4 +150,10 @@ return [
     "Order updated successfully" => "تم تحديث الطلب بنجاح",
     "Order cannot be updated" => "لا يمكن تعديل هذا الطلب",
     "No orders found yet" => "لا توجد طلبات حالياً",
+    'Notification marked as read' => 'تم تحديد الإشعار كمقروء',
+    'All notifications marked as read' => 'تم تحديد جميع الإشعارات كمقروءة',
+    'Notifications fetched successfully' => 'تم جلب الإشعارات بنجاح',
+    'FCM Token updated successfully' => 'تم تحديث رمز الإشعارات بنجاح',
+    'Order Created' => 'تم إنشاء الطلب',
+    'Your order has been placed successfully. Order ID: ' => 'تم إنشاء طلبك بنجاح. رقم الطلب: ',
 ];

@@ -35,7 +35,7 @@ class ProductController extends Controller
         }
 
         $message = $result['data']->isEmpty() ? __('messages.No products found yet') : __('messages.Products fetched successfully');
-        return $this->paginated(ProductResource::class, $result['data'], $message);
+        return $this->paginated(ProductListResource::class, $result['data'], $message);
     }
 
     /**

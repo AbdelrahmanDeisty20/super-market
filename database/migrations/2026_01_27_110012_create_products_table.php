@@ -25,7 +25,6 @@ return new class extends Migration
             $table->foreignId('unit_id')->nullable()->constrained()->nullOnDelete(); // Link to measurement unit (e.g., kg)
             $table->decimal('min_quantity', 10, 2)->default(1); // Minimum purchase amount
             $table->decimal('step_quantity', 10, 2)->default(1); // Increment amount (e.g., +0.5 kg)
-            $table->boolean('is_on_sale')->default(false); // Badge for sales
             $table->boolean('is_featured')->default(false); // Badge for featured/popular items
             $table->timestamps(); // Created at and Updated at timestamps
         });
