@@ -31,6 +31,7 @@ class RegisterRequest extends FormRequest
             ],
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'fcm_token' => 'nullable|string',
+            'device_id' => 'nullable|string',
         ];
     }
 

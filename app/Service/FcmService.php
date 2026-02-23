@@ -30,11 +30,20 @@ class FcmService
             'data' => $data,
         ]);
 
-        // 2. إرسال إشعار الدفع (Push Notification) عبر الطابور (Job) لتسريع الأداء
-        if ($user->fcm_token) {
-            // هنا بنرمي مهمة التواصل مع Firebase للـ Job اللي شغال في الخلفية
-            // العميل مش هيستنى رد Firebase، الطلب بيكمل فوراً
-            SendFcmNotificationJob::dispatch($user, $title, $body, $data ?? []);
+        // 2. إرسال إشعار الدفع (Push Notification) لكل أجهزة المستخدم المسجلة
+        $tokens = $user->fcmTokens; // جلب كل الرموز المرتبطة بالمستخدم
+
+        if ($tokens->isNotEmpty()) {
+            foreach ($tokens as $tokenRelation) {
+                // إرسال الإشعار لكل جهاز عبر الطابور (Job) لتسريع الأداء
+                SendFcmNotificationJob::dispatch(
+                    $user,
+                    $title,
+                    $body,
+                    $data ?? [],
+                    $tokenRelation->fcm_token // نمرر التوكن الخاص بكل جهاز
+                );
+            }
         }
     }
 }

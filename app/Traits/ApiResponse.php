@@ -81,9 +81,9 @@ trait ApiResponse
      * @param mixed $data
      * @return JsonResponse
      */
-    public function paginated($resource, $data, $message = "success"): JsonResponse
+    public function paginated($resource, $data, $message = "success", $extra = []): JsonResponse
     {
-        return response()->json([
+        $response = [
             'status' => true,
             'message' => $message,
             'data' => $resource::collection($data->items()),
@@ -93,6 +93,12 @@ trait ApiResponse
                 'total' => $data->total(),
                 'last_page' => $data->lastPage(),
             ],
-        ]);
+        ];
+
+        if (!empty($extra)) {
+            $response = array_merge($response, $extra);
+        }
+
+        return response()->json($response);
     }
 }

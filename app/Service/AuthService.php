@@ -20,8 +20,12 @@ class AuthService
             'password' => $data['password'], // User model handles hashing via mutator
             'phone' => $data['phone'] ?? '',
             'role' => $data['role'] ?? 'user',
-            'fcm_token' => $data['fcm_token'] ?? '',
         ]);
+
+        // تحديث رمز الـ FCM إذا تم إرساله
+        if (!empty($data['fcm_token'])) {
+            app(\App\Service\NotificationService::class)->updateFcmToken($user, $data['fcm_token'], $data['device_id'] ?? null);
+        }
 
         \event(new Registered($user));
 
@@ -51,8 +55,9 @@ class AuthService
         }
 
         // تحديث الـ FCM Token عند كل عملية دخول لضمان صحته
+        // تحديث رمز الـ FCM إذا تم إرساله عند الدخول
         if (isset($data['fcm_token'])) {
-            $user->update(['fcm_token' => $data['fcm_token']]);
+            app(\App\Service\NotificationService::class)->updateFcmToken($user, $data['fcm_token'], $data['device_id'] ?? null);
         }
 
         return $this->generateTokenResponse($user);
