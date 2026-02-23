@@ -2,10 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\User;
 use BezhanSalleh\LanguageSwitch\LanguageSwitch;
-use Illuminate\Support\ServiceProvider;
-
 use Illuminate\Auth\Notifications\ResetPassword;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,9 +29,12 @@ class AppServiceProvider extends ServiceProvider
         LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
             $switch
                 ->locales(['ar', 'en']);
-
         });
 
         app()->setLocale(session('lang', default: config('app.locale')));
+
+        Gate::before(function (User $user, string $ability) {
+            return $user->hasRole('super_admin') ? true : null;
+        });
     }
 }
