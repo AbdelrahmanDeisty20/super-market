@@ -26,7 +26,6 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
         'email', // البريد الإلكتروني (فريد)
         'phone', // رقم الهاتف للتواصل/التوصيل
         'password', // كلمة المرور المشفرة
-        'fcm_token', // للاشعارات Firebase
         'image', // مسار صورة الملف الشخصي
         'role', // دور المستخدم (أدمن أو مستخدم عادي)
     ];
@@ -102,6 +101,14 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
     public function notifications()
     {
         return $this->hasMany(Notification::class); // علاقة واحد لمتعدد مع الإشعارات
+    }
+
+    /**
+     * الحصول على جميع رموز أجهزة المستخدم (FCM Tokens)
+     */
+    public function fcmTokens()
+    {
+        return $this->hasMany(UserFcmToken::class);
     }
     /**
      * Send the email verification notification.

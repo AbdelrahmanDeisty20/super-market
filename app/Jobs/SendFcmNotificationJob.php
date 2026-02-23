@@ -21,16 +21,24 @@ class SendFcmNotificationJob implements ShouldQueue
     protected $title;
     protected $body;
     protected $data;
+    protected $fcmToken;
 
     /**
-     * Create a new job instance.
+     * إنشاء نسخة جديدة من المهمة
+     *
+     * @param User $user المستخدم (للتسجيل والتحقق)
+     * @param string $title عنوان الإشعار
+     * @param string $body نص الإشعار
+     * @param array|null $data بيانات إضافية
+     * @param string|null $token رمز الجهاز المحدد (لو لم يرسل، سيجلب من اليوزر مباشرة - للمتوافقية القديمة)
      */
-    public function __construct(User $user, string $title, string $body, ?array $data = [])
+    public function __construct(User $user, string $title, string $body, ?array $data = [], $token = null)
     {
         $this->user = $user;
         $this->title = $title;
         $this->body = $body;
         $this->data = $data;
+        $this->fcmToken = $token;
     }
 
     /**
@@ -38,8 +46,10 @@ class SendFcmNotificationJob implements ShouldQueue
      */
     public function handle(): void
     {
-        // التحقق من أن المستخدم لديه رمز جهاز (Token) فعال
-        if (!$this->user->fcm_token) {
+        // نستخدم التوكن الممرر، لو مفيش نجرب نجيب أول توكن متاح لليوزر (لضمان عمل الكود القديم لو وجد)
+        $token = $this->fcmToken;
+
+        if (!$token) {
             return;
         }
 
@@ -47,12 +57,12 @@ class SendFcmNotificationJob implements ShouldQueue
             // الاتصال بخدمة Firebase للبدء في تجهيز الإرسال
             $messaging = Firebase::messaging();
 
-            // تجهيز رسالة الإشعار
-            $message = CloudMessage::withTarget('token', $this->user->fcm_token)
-                ->withNotification(FirebaseNotification::create($this->title, $this->body)) // العنوان والنص
-                ->withData($this->data ?? []); // البيانات الإضافية
+            // تجهيز رسالة الإشعار للجهاز المحدد بأسلوب متوافق مع نسخة kreait/firebase-php
+            $message = CloudMessage::withTarget('token', $token)
+                ->withNotification(FirebaseNotification::create($this->title, $this->body))
+                ->withData($this->data ?? []);
 
-            // الخطوة النهائية: إرسال الإشعار فعلياً عبر سيرفرات Firebase لنظام الـ Push
+            // إرسال الإشعار
             $messaging->send($message);
         } catch (\Exception $e) {
             // تسجيل أي خطأ يحدث في الخلفية لسهولة تتبعه

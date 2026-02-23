@@ -27,10 +27,14 @@ class NotificationController extends Controller
     {
         $notifications = $this->notificationService->getUserNotifications();
 
+        $message = $notifications->isEmpty()
+            ? __('messages.You have no notifications yet')
+            : __('messages.Notifications fetched successfully');
+
         return $this->paginated(
             NotificationResource::class,
             $notifications,
-            __('messages.Notifications fetched successfully'),
+            $message,
             ['unread_count' => $this->notificationService->getUnreadCount()]
         );
     }
@@ -42,9 +46,10 @@ class NotificationController extends Controller
     {
         $request->validate([
             'fcm_token' => 'required|string',
+            'device_id' => 'nullable|string',
         ]);
 
-        $this->notificationService->updateFcmToken(auth()->user(), $request->fcm_token);
+        $this->notificationService->updateFcmToken(auth()->user(), $request->fcm_token, $request->device_id);
 
         return $this->success([], __('messages.FCM Token updated successfully'));
     }

@@ -179,6 +179,15 @@ class OrderService
             $order->update(['status' => 'cancelled']);
         });
 
+        // إرسال إشعار لليوزر بأن طلبه تم إلغاؤه
+        $this->fcmService->sendNotification(
+            $user,
+            \__('messages.Order Cancelled'),
+            \__('messages.Your order has been cancelled. Order ID: ') . $order->id,
+            ['order_id' => (string)$order->id],
+            'order_cancelled'
+        );
+
         return $order->load(['items.product', 'address']);
     }
 }
