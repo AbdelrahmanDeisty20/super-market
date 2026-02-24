@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-use App\Models\Notification;
+use App\Models\AppNotification as Notification;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,7 +14,7 @@ class NotificationService
     public function getUserNotifications($perPage = 15)
     {
         return Notification::where('user_id', Auth::id())
-            ->latest() // ترتيب من الأحدث للأقدم
+            ->latest()  // ترتيب من الأحدث للأقدم
             ->paginate($perPage);
     }
 
