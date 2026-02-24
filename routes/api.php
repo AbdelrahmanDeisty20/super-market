@@ -77,7 +77,10 @@ Route::middleware([setLang::class])->group(function () {
         // Notifications
         Route::get('notifications', [NotificationController::class, 'index']);
         Route::put('notifications/{id}/read', [NotificationController::class, 'markAsRead']);
-        Route::put('notifications/read-all', [NotificationController::class, 'markAllAsRead']);
+        Route::post('notifications/mark-all-read', [NotificationController::class, 'markAllAsRead']);
+
+        // Driver Tracking Routes
+        Route::post('driver/orders/{orderId}/location', [\App\Http\Controllers\API\DriverController::class, 'updateLocation']);
 
         // Measurement Units
         Route::get('units', [UnitController::class, 'index']);
