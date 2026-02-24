@@ -36,7 +36,7 @@ class OrderService
             }
 
             // حساب المجموع الفرعي (مع مراعاة سعر الخصم)
-            $subtotal = $cart->items->sum(function ($item) {
+            $subtotal = collect($cart->items)->sum(function ($item) {
                 $product = $item->product;
                 $currentPrice = $product->discount_price > 0 ? $product->discount_price : $product->price;
                 return $currentPrice * $item->quantity;

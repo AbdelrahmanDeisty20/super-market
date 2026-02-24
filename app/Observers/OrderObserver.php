@@ -55,6 +55,7 @@ class OrderObserver
 
         // لو الحالة الجديدة ليها إشعار متعرف، نبعته
         if (isset($notifications[$status])) {
+            // 1. إرسال إشعار Push Notification عن طريق Firebase (FCM)
             $this->fcmService->sendNotification(
                 $user,
                 $notifications[$status]['title'],
@@ -62,6 +63,9 @@ class OrderObserver
                 ['order_id' => (string)$order->id],
                 'order_status_updated'
             );
+
+            // 2. إرسال تحديث لحظي (Real-time Broadcast) عن طريق WebSocket (Reverb)
+            \event(new \App\Events\OrderStatusUpdated($order));
         }
     }
 }
