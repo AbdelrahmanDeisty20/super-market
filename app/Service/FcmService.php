@@ -2,9 +2,9 @@
 
 namespace App\Service;
 
-use App\Models\User;
-use App\Models\Notification;
 use App\Jobs\SendFcmNotificationJob;
+use App\Models\AppNotification as Notification;
+use App\Models\User;
 use Illuminate\Support\Facades\Log;
 
 class FcmService
@@ -31,7 +31,7 @@ class FcmService
         ]);
 
         // 2. إرسال إشعار الدفع (Push Notification) لكل أجهزة المستخدم المسجلة
-        $tokens = $user->fcmTokens; // جلب كل الرموز المرتبطة بالمستخدم
+        $tokens = $user->fcmTokens;  // جلب كل الرموز المرتبطة بالمستخدم
 
         if ($tokens->isNotEmpty()) {
             foreach ($tokens as $tokenRelation) {
@@ -41,7 +41,7 @@ class FcmService
                     $title,
                     $body,
                     $data ?? [],
-                    $tokenRelation->fcm_token // نمرر التوكن الخاص بكل جهاز
+                    $tokenRelation->fcm_token  // نمرر التوكن الخاص بكل جهاز
                 );
             }
         }
