@@ -27,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
         \App\Models\Offer::observe(\App\Observers\OfferObserver::class);
         \App\Models\Coupon::observe(\App\Observers\CouponObserver::class);
         \App\Models\Order::observe(\App\Observers\OrderObserver::class);
+        \App\Models\Product::observe(\App\Observers\ProductObserver::class);
 
         ResetPassword::createUrlUsing(function (object $notifiable, string $token) {
             return route('api.password.verify', ['token' => $token, 'email' => $notifiable->getEmailForPasswordReset()]);
