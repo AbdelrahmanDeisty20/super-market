@@ -132,6 +132,11 @@ return [
         'cash_on_delivery' => 'الدفع عند الاستلام',
         'credit_card' => 'بطاقة ائتمان',
         'wallet' => 'المحفظة',
+        'customer_info' => 'بيانات العميل',
+        'address_info' => 'عنوان التوصيل',
+        'order_summary' => 'ملخص الطلب',
+        'label' => 'التسمية',
+        'address' => 'العنوان',
     ],
     'actions' => [
         'create' => 'إنشاء',
@@ -141,6 +146,8 @@ return [
         'bulk_actions' => 'إجراءات بالجملة',
         'delete_bulk' => 'حذف المختار',
         'list' => 'القائمة',
+        'view' => 'عرض',
+        'change_status' => 'تغيير الحالة',
     ],
     'widgets' => [
         'orders_chart' => [

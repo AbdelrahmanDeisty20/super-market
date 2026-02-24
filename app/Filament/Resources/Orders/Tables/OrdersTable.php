@@ -66,6 +66,8 @@ class OrdersTable
                     ]),
             ])
             ->recordActions([
+                \Filament\Actions\ViewAction::make()
+                    ->label(__('Admin.actions.view')),
                 EditAction::make()
                     ->label(__('Admin.actions.edit')),
             ])

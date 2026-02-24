@@ -132,6 +132,11 @@ return [
         'cash_on_delivery' => 'Cash On Delivery',
         'credit_card' => 'Credit Card',
         'wallet' => 'Wallet',
+        'customer_info' => 'Customer Information',
+        'address_info' => 'Delivery Address',
+        'order_summary' => 'Order Summary',
+        'label' => 'Label',
+        'address' => 'Address',
     ],
     'actions' => [
         'create' => 'Create',
@@ -141,6 +146,8 @@ return [
         'bulk_actions' => 'Bulk Actions',
         'delete_bulk' => 'Delete Selected',
         'list' => 'List',
+        'view' => 'View',
+        'change_status' => 'Change Status',
     ],
     'widgets' => [
         'orders_chart' => [
