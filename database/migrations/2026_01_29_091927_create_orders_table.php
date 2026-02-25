@@ -23,6 +23,9 @@ return new class extends Migration
             $table->decimal('discount', 10, 2)->default(0); // Discount amount
             $table->decimal('total', 10, 2); // Final total amount for the order (changed to decimal)
             $table->foreignId('address_id')->constrained('user_addresses')->onDelete('cascade'); // Link to the delivery address
+            // إحداثيات موقع المندوب للحفظ والمتابعة (GPS Coordinates)
+            $table->decimal('last_lat', 10, 8)->nullable();
+            $table->decimal('last_long', 11, 8)->nullable();
             $table->timestamps(); // Created at and Updated at timestamps
         });
     }

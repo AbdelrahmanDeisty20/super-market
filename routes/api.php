@@ -122,5 +122,6 @@ Route::middleware([setLang::class])->group(function () {
         Route::post('order', [\App\Http\Controllers\API\OrderController::class, 'store']);
         Route::put('order/{id}', [\App\Http\Controllers\API\OrderController::class, 'update']);
         Route::put('order/{id}/cancel', [\App\Http\Controllers\API\OrderController::class, 'cancel']);
+        Route::get('order/{id}/tracking', [\App\Http\Controllers\API\OrderController::class, 'tracking']);
     });
 });

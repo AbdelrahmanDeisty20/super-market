@@ -83,4 +83,19 @@ class OrderController extends Controller
             return $this->error($e->getMessage(), 422);
         }
     }
+
+    /**
+     * جلب بيانات التتبع الحالية (Status + Lat + Long)
+     */
+    public function tracking(Request $request, $id): JsonResponse
+    {
+        $order = $this->orderService->getOrder($request->user(), $id);
+
+        return $this->success([
+            'id' => $order->id,
+            'status' => $order->status,
+            'last_lat' => (float) $order->last_lat,
+            'last_long' => (float) $order->last_long,
+        ], \__('messages.Tracking data fetched successfully'));
+    }
 }
