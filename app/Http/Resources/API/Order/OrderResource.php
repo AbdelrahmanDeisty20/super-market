@@ -31,6 +31,8 @@ class OrderResource extends JsonResource
             'subtotal' => (float) $this->subtotal,
             'delivery_fee' => (float) $this->delivery_fee,
             'total' => (float) $this->total,
+            'last_lat' => (float) $this->last_lat,
+            'last_long' => (float) $this->last_long,
             'address' => new \App\Http\Resources\API\UserAddressResource($this->whenLoaded('address')),
             'items' => OrderItemResource::collection($this->whenLoaded('items')),
             'created_at' => $this->created_at,
