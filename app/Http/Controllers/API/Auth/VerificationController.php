@@ -22,7 +22,7 @@ class VerificationController extends Controller
 
         if ($user->hasVerifiedEmail()) {
             if ($request->wantsJson()) {
-                return $this->success(new UserResource($user), __('messages.Email already verified'));
+                return $this->error(__('messages.Email already verified'), 400);
             }
             return redirect(config('app.frontend_url') . '/signin?already_verified=1');
         }

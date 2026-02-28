@@ -38,7 +38,7 @@ class OrderService
             // حساب المجموع الفرعي (مع مراعاة سعر الخصم)
             $subtotal = collect($cart->items)->sum(function ($item) {
                 $product = $item->product;
-                $currentPrice = $product->discount_price > 0 ? $product->discount_price : $product->price;
+                $currentPrice = !is_null($product->discount_price) ? $product->discount_price : $product->price;
                 return $currentPrice * $item->quantity;
             });
 
@@ -54,8 +54,10 @@ class OrderService
                 if ($couponResult['status']) {
                     $coupon = $couponResult['data']->resource; // وصول إلى الموديل من الـ Resource
                     if ($coupon->type === 'fixed') {
-                        $discount = $coupon->value;
+                        // الخصم الثابت لا يتجاوز المجموع الكلي (لتجنب total سالب)
+                        $discount = min($coupon->value, $subtotal + $deliveryFee);
                     } else {
+                        // الخصم النسبي يُحسب على subtotal فقط (بدون رسوم التوصيل)
                         $discount = ($subtotal * $coupon->value) / 100;
                     }
                     $couponId = $coupon->id;
@@ -91,7 +93,7 @@ class OrderService
 
                 $product->decrement('stock', $cartItem->quantity);
 
-                $currentPrice = $product->discount_price > 0 ? $product->discount_price : $product->price;
+                $currentPrice = !is_null($product->discount_price) ? $product->discount_price : $product->price;
 
                 $order->items()->create([
                     'product_id' => $cartItem->product_id,

@@ -174,4 +174,23 @@ return [
     'Low Stock Alert' => 'Warning: Low Stock',
     'Product' => 'Product',
     'is low on stock' => 'is running low on stock',
+
+    // Missing translation keys
+    'Address fetched successfully' => 'Address fetched successfully',
+    'Category fetched successfully' => 'Category fetched successfully',
+    'current_password' => 'current password',
+    'Driver location updated successfully' => 'Driver location updated successfully',
+    'Insufficient stock for product' => 'Insufficient stock for product',
+    'message' => 'message',
+    'No brands found' => 'No brands found',
+    'No categories found' => 'No categories found',
+    'No offers found' => 'No offers found',
+    'No products found' => 'No products found',
+    'Setting not found' => 'Setting not found',
+    'Tracking data fetched successfully' => 'Tracking data fetched successfully',
+    'The :attribute field is required when :values is present' => 'The :attribute field is required when :values is present',
+    'The :attribute may not be greater than :max' => 'The :attribute may not be greater than :max',
+    'The :attribute must be an integer' => 'The :attribute must be an integer',
+    'The :attribute must be at least :min' => 'The :attribute must be at least :min',
+    'The selected :attribute is invalid' => 'The selected :attribute is invalid',
 ];

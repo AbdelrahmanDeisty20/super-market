@@ -15,7 +15,7 @@ class ProductService
      */
     public function getProducts($filters = [])
     {
-        $query = Product::with(['category', 'brand', 'unit', 'images', 'offers']);
+        $query = Product::visible()->with(['category', 'brand', 'unit', 'images', 'offers']);
 
         if (!empty($filters['search'])) {
             $search = $filters['search'];
@@ -92,7 +92,7 @@ class ProductService
      */
     public function getProductById($id)
     {
-        $product = Product::with(['category', 'brand', 'unit', 'images', 'offers'])->find($id);
+        $product = Product::visible()->with(['category', 'brand', 'unit', 'images', 'offers'])->find($id);
 
         if (!$product) {
             return [
@@ -111,7 +111,7 @@ class ProductService
 
     public function isFeatured()
     {
-        $products = Product::with(['unit', 'images', 'offers'])->where('is_featured', true)->paginate(10);
+        $products = Product::visible()->with(['unit', 'images', 'offers'])->where('is_featured', true)->paginate(10);
 
         if ($products->isEmpty()) {
             return [
@@ -131,7 +131,7 @@ class ProductService
 
     public function onSale()
     {
-        $products = Product::with(['unit', 'images', 'offers'])->whereHas('offers', function ($q) {
+        $products = Product::visible()->with(['unit', 'images', 'offers'])->whereHas('offers', function ($q) {
             $q->where('type', 'percentage')->orWhere('type', 'fixed');
         })->paginate(10);
 
@@ -162,7 +162,7 @@ class ProductService
             ];
         }
 
-        $products = Product::with(['unit', 'images', 'offers'])
+        $products = Product::visible()->with(['unit', 'images', 'offers'])
             ->where('category_id', $product->category_id)
             ->where('id', '!=', $productId)
             ->limit(3)->get();
@@ -176,7 +176,7 @@ class ProductService
 
     public function getMayLikeProducts()
     {
-        $products = Product::with(['unit', 'images', 'offers'])
+        $products = Product::visible()->with(['unit', 'images', 'offers'])
             ->inRandomOrder()
             ->limit(3)->get();
 
@@ -226,10 +226,8 @@ class ProductService
         }
 
         // Update discount_price only if it's different from original
-        // If no offers or best price is same as original, we set discount_price to 0 or null?
-        // Let's stick to the current convention: discount_price = 0 means no discount if we want.
-        // But usually, setting it to the actual discount price is better for UI.
-        $product->discount_price = ($bestPrice < $originalPrice) ? $bestPrice : 0;
+        // nullable means no discount, 0 means free
+        $product->discount_price = ($bestPrice < $originalPrice) ? $bestPrice : null;
         $product->save();
     }
 }

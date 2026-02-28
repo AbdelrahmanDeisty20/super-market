@@ -82,9 +82,6 @@ Route::middleware([setLang::class])->group(function () {
         // Driver Tracking Routes
         Route::post('driver/orders/{orderId}/location', [\App\Http\Controllers\API\DriverController::class, 'updateLocation']);
 
-        // Measurement Units
-        Route::get('units', [UnitController::class, 'index']);
-
         // User Addresses
         Route::delete('addresses/delete-all', [UserAddressController::class, 'deleteAll']);
         Route::delete('addresses/{id}', [UserAddressController::class, 'destroy']);

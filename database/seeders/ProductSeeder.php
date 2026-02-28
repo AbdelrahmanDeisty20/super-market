@@ -149,7 +149,7 @@ class ProductSeeder extends Seeder
                         'brand_id' => $brand->id,
                         'unit_id' => $unit->id,
                         'price' => $pData['price'],
-                        'discount_price' => $pData['price'] * 0.9, // Default 10% discount for seeder
+                        'discount_price' => null, // No default discount, will be calculated from offers
                         'stock' => $pData['stock'],
                         'description_ar' => $pData['description_ar'],
                         'description_en' => $pData['description_en'],
@@ -157,13 +157,11 @@ class ProductSeeder extends Seeder
                     ]
                 );
 
-                // Add placeholder images if needed
-                for ($i = 1; $i <= 3; $i++) {
-                    ProductImage::create([
-                        'product_id' => $product->id,
-                        'image' => 'products/placeholder.jpg',
-                    ]);
-                }
+                // Add images using the unified image
+                ProductImage::updateOrCreate(
+                    ['product_id' => $product->id],
+                    ['image' => 'super-market.jpg']
+                );
             }
         }
     }
