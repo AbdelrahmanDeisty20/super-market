@@ -24,7 +24,7 @@ class OfferSeeder extends Seeder
                 'value' => 15,
                 'start_date' => Carbon::now(),
                 'end_date' => Carbon::now()->addMonths(2),
-                'image' => 'offers/ramadan.jpg',
+                'image' => 'super-market.jpg',
             ],
             [
                 'title_ar' => 'تخفيضات عطلة نهاية الأسبوع',
@@ -32,10 +32,10 @@ class OfferSeeder extends Seeder
                 'description_ar' => 'توفير كبير على المنظفات والمشروبات.',
                 'description_en' => 'Big savings on cleaning tools and beverages.',
                 'type' => 'fixed',
-                'value' => 25,
+                'value' => 5,
                 'start_date' => Carbon::now(),
                 'end_date' => Carbon::now()->addDays(3),
-                'image' => 'offers/weekend.jpg',
+                'image' => 'super-market.jpg',
             ],
         ];
 
@@ -43,8 +43,14 @@ class OfferSeeder extends Seeder
             $offer = Offer::updateOrCreate(['title_en' => $offData['title_en']], $offData);
 
             // Attach random products to each offer
-            $products = Product::inRandomOrder()->limit(5)->pluck('id');
-            $offer->products()->sync($products);
+            $products = Product::inRandomOrder()->limit(5)->get();
+            $offer->products()->sync($products->pluck('id'));
+
+            // Recalculate discount price for all products in this offer
+            $productService = app(\App\Service\ProductService::class);
+            foreach ($products as $product) {
+                $productService->recalculateDiscountPrice($product);
+            }
         }
     }
 }

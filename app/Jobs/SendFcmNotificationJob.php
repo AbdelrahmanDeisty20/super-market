@@ -57,14 +57,15 @@ class SendFcmNotificationJob implements ShouldQueue
             // الاتصال بخدمة Firebase للبدء في تجهيز الإرسال
             $messaging = Firebase::messaging();
 
-            // تجهيز رسالة الإشعار للجهاز المحدد بأسلوب متوافق مع نسخة kreait/firebase-php
-            $message = CloudMessage::withTarget('token', $token)
+            // تجهيز رسالة الإشعار للجهاز المحدد بأسلوب متوافق مع نسخة kreait/firebase-php 8.x
+            $message = CloudMessage::new()
+                ->withToken($token)
                 ->withNotification(FirebaseNotification::create($this->title, $this->body))
                 ->withData($this->data ?? []);
 
             // إرسال الإشعار
             $messaging->send($message);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             // تسجيل أي خطأ يحدث في الخلفية لسهولة تتبعه
             Log::error('Queued FCM Error: ' . $e->getMessage(), [
                 'user_id' => $this->user->id,

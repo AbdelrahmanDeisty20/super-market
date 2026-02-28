@@ -174,4 +174,23 @@ return [
     'Low Stock Alert' => 'تنبيه: مخزون منخفض',
     'Product' => 'المنتج',
     'is low on stock' => 'كميته منخفضة في المخزن',
+
+    // ترجمات ناقصة تم إضافتها
+    'Address fetched successfully' => 'تم جلب العنوان بنجاح',
+    'Category fetched successfully' => 'تم جلب القسم بنجاح',
+    'current_password' => 'كلمة المرور الحالية',
+    'Driver location updated successfully' => 'تم تحديث موقع السائق بنجاح',
+    'Insufficient stock for product' => 'المخزون غير كافٍ للمنتج',
+    'message' => 'الرسالة',
+    'No brands found' => 'لا توجد علامات تجارية',
+    'No categories found' => 'لا توجد أقسام',
+    'No offers found' => 'لا توجد عروض',
+    'No products found' => 'لا توجد منتجات',
+    'Setting not found' => 'الإعداد غير موجود',
+    'Tracking data fetched successfully' => 'تم جلب بيانات التتبع بنجاح',
+    'The :attribute field is required when :values is present' => 'حقل :attribute مطلوب عندما يكون :values موجوداً',
+    'The :attribute may not be greater than :max' => 'يجب ألا يتجاوز :attribute :max',
+    'The :attribute must be an integer' => 'يجب أن يكون :attribute رقماً صحيحاً',
+    'The :attribute must be at least :min' => 'يجب أن يكون :attribute على الأقل :min',
+    'The selected :attribute is invalid' => 'القيمة المختارة لـ :attribute غير صالحة',
 ];

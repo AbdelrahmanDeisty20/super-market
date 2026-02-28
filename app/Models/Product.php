@@ -28,6 +28,16 @@ class Product extends Model
     ]; // الحقول القابلة للتعبئة
 
     /**
+     * نطاق لجلب المنتجات التي تنتمي لأقسام مرئية فقط.
+     */
+    public function scopeVisible($query)
+    {
+        return $query->whereHas('category', function ($q) {
+            $q->where('is_visible', true);
+        });
+    }
+
+    /**
      * الحصول على العروض المرتبطة بالمنتج
      */
     public function offers()

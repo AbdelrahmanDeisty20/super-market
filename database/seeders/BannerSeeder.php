@@ -12,6 +12,13 @@ class BannerSeeder extends Seeder
      */
     public function run(): void
     {
-        Banner::factory(5)->create();
+        for ($i = 1; $i <= 5; $i++) {
+            \App\Models\Banner::create([
+                'title_ar' => 'بانر إعلاني ' . $i,
+                'title_en' => 'Advertising Banner ' . $i,
+                'image' => 'super-market.jpg',
+                'is_active' => true,
+            ]);
+        }
     }
 }

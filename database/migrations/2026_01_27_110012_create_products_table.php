@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('description_ar'); // Detailed Arabic description
             $table->text('description_en')->nullable(); // Detailed English description
             $table->decimal('price', 10, 2); // Regular selling price
-            $table->decimal('discount_price', 10, 2)->default(0); // Discounted price if applicable
+            $table->decimal('discount_price', 10, 2)->nullable()->default(null); // Discounted price if applicable, null means no discount
             $table->integer('stock'); // Available quantity in stock
             $table->foreignId('category_id')->constrained()->onDelete('cascade'); // Link to product category
             $table->foreignId('brand_id')->constrained()->onDelete('cascade'); // Link to product brand

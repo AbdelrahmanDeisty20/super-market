@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Offer;
+use App\Models\User;
 use App\Jobs\BroadcastNotificationJob;
 
 class OfferObserver
@@ -62,7 +63,7 @@ class OfferObserver
         $fcmService = app(\App\Service\FcmService::class);
 
         // أ. الناس اللي حاطين المنتجات في "السلة" - دول ليهم الأولوية القصوى
-        $cartUsers = \App\Models\User::whereHas('cart.items', function ($query) use ($productIds) {
+        $cartUsers = User::whereHas('cart.items', function ($query) use ($productIds) {
             $query->whereIn('product_id', $productIds);
         })->get();
 
@@ -79,7 +80,7 @@ class OfferObserver
         // ب. الناس اللي حاطين المنتجات في "المفضلة" - بس مش موجودين في لستة السلة عشان ميوصلهمش إشعارين
         $cartUserIds = $cartUsers->pluck('id')->toArray();
 
-        $wishlistUsers = \App\Models\User::whereHas('wishlists', function ($query) use ($productIds) {
+        $wishlistUsers = User::whereHas('wishlists', function ($query) use ($productIds) {
             $query->whereIn('product_id', $productIds);
         })
             ->whereNotIn('id', $cartUserIds) // استبعاد اللي جالهم إشعار السلة
