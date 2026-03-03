@@ -7,6 +7,7 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class OrdersTable
 {
@@ -75,6 +76,8 @@ class OrdersTable
                 BulkActionGroup::make([
                     DeleteBulkAction::make()
                         ->label(__('Admin.actions.delete_bulk')),
+                    ExportBulkAction::make()
+                        ->label(__('Admin.actions.export')),
                 ])->label(__('Admin.actions.bulk_actions')),
             ]);
     }

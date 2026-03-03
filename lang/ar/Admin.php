@@ -137,6 +137,7 @@ return [
         'order_summary' => 'ملخص الطلب',
         'label' => 'التسمية',
         'address' => 'العنوان',
+        'file' => 'الملف',
     ],
     'actions' => [
         'create' => 'إنشاء',
@@ -148,6 +149,8 @@ return [
         'list' => 'القائمة',
         'view' => 'عرض',
         'change_status' => 'تغيير الحالة',
+        'export' => 'تصدير',
+        'import' => 'استيراد',
     ],
     'widgets' => [
         'orders_chart' => [

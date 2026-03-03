@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Users\Pages;
 use App\Filament\Resources\Users\UserResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
+use pxlrbt\FilamentExcel\Actions\Pages\ExportAction;
 
 class ListUsers extends ListRecords
 {
@@ -14,6 +15,8 @@ class ListUsers extends ListRecords
     {
         return [
             CreateAction::make(),
+            ExportAction::make()
+                ->label(__('Admin.actions.export')),
         ];
     }
 }

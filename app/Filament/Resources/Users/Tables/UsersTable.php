@@ -5,9 +5,9 @@ namespace App\Filament\Resources\Users\Tables;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class UsersTable
 {
@@ -18,9 +18,6 @@ class UsersTable
                 TextColumn::make('id')
                     ->label('ID')
                     ->sortable(),
-                ImageColumn::make('image')
-                    ->label(__('Admin.fields.image'))
-                    ->circular(),
                 TextColumn::make('name')
                     ->label(__('Admin.fields.name'))
                     ->searchable()
@@ -29,36 +26,17 @@ class UsersTable
                     ->label(__('Admin.fields.email'))
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('phone')
-                    ->label(__('Admin.fields.phone'))
-                    ->searchable()
-                    ->sortable(),
-                TextColumn::make('role')
-                    ->label(__('Admin.fields.role'))
+                TextColumn::make('roles.name')
+                    ->label(__('Admin.fields.roles'))
                     ->badge()
-                    ->color(fn(string $state): string => match ($state) {
-                        'admin' => 'danger',
-                        'user' => 'success',
-                        default => 'gray',
-                    })
-                    ->formatStateUsing(fn(string $state): string => match ($state) {
-                        'admin' => __('Admin.fields.admin'),
-                        'user' => __('Admin.fields.user'),
-                        default => $state,
-                    })
-                    ->sortable(),
+                    ->color('primary'),
                 TextColumn::make('created_at')
                     ->label(__('Admin.fields.created_at'))
                     ->dateTime()
                     ->sortable(),
             ])
             ->filters([
-                \Filament\Tables\Filters\SelectFilter::make('role')
-                    ->label(__('Admin.fields.role'))
-                    ->options([
-                        'admin' => __('Admin.fields.admin'),
-                        'user' => __('Admin.fields.user'),
-                    ]),
+                //
             ])
             ->recordActions([
                 EditAction::make()
@@ -68,6 +46,8 @@ class UsersTable
                 BulkActionGroup::make([
                     DeleteBulkAction::make()
                         ->label(__('Admin.actions.delete_bulk')),
+                    ExportBulkAction::make()
+                        ->label(__('Admin.actions.export')),
                 ])->label(__('Admin.actions.bulk_actions')),
             ]);
     }
