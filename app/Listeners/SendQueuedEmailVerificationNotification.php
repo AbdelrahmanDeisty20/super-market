@@ -2,15 +2,14 @@
 
 namespace App\Listeners;
 
-use Illuminate\Auth\Events\Registered;
 use App\Notifications\VerifyEmail;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class SendQueuedEmailVerificationNotification
+class SendQueuedEmailVerificationNotification implements ShouldQueue
 {
-
     /**
      * Handle the event.
      */

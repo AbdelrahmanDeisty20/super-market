@@ -28,7 +28,8 @@ class Offer extends Model
      */
     public function getTitleAttribute()
     {
-        return $this->getTranslatedValue('title');
+        $local = app()->getLocale();
+        return $this->{'title_' . $local}??$this->name_en;
     }
 
     /**
@@ -36,7 +37,8 @@ class Offer extends Model
      */
     public function getDescriptionAttribute()
     {
-        return $this->getTranslatedValue('description');
+        $local = app()->getLocale();
+        return $this->{'description_' . $local}??$this->description_en;
     }
 
     /**
