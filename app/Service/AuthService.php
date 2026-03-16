@@ -20,6 +20,7 @@ class AuthService
             'password' => $data['password'], // User model handles hashing via mutator
             'phone' => $data['phone'] ?? '',
             'role' => $data['role'] ?? 'user',
+            'image' => $data['image'] ?? '',
         ]);
 
         // تحديث رمز الـ FCM إذا تم إرساله
